@@ -58,4 +58,52 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+
+
+    <string name="dialog_title">title</string>
+    <string name="dialog_message">message</string>
+    <string name="dialog_ensure">确定</string>
+    <string name="dialog_cancel">取消</string>
+
+
+    <string name="back">返回</string>
+    <string name="setting">设置</string>
+    <string name="title_text">标题</string>
+    <string name="loading">正在加载中…</string>
+    <string name="add">添加</string>
+    <string name="open_door">开门</string>
+    <string name="close_door">关门</string>
+    <string name="stop_door">停止</string>
+
+    <string name="door_name">门名称:</string>
+    <string name="door_id">门序号:</string>
+    <string name="door_phone">门号码:</string>
+    <string name="door_encoder_pulses">编码器脉冲数:</string>
+    <string name="door_pulse_upper_limit">上限位脉冲数:</string>
+    <string name="door_pulse_lower_limit">下限位脉冲数:</string>
+    <string name="door_password">门密码:</string>
+    <!-- hint -->
+    <string name="input_door_name">请输入门名称</string>
+    <string name="input_door_id">请输入门序号</string>
+    <string name="input_door_phone">请输入门号码</string>
+    <string name="input_door_encoder_pulses">请输入编码器脉冲数</string>
+    <string name="input_door_pulse_upper_limit">请输入上限位脉冲数</string>
+    <string name="input_door_pulse_lower_limit">请输入下限位脉冲数</string>
+    <string name="input_door_password">请输入门密码</string>
+    <string name="door_id_digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+
+    <string name="user_name">用户昵称:</string>
+    <string name="user_phone">手机号:</string>
+
+
+    <string name="input_user_name">请输入用户昵称</string>
+    <string name="input_user_phone">请输入手机号</string>
+
+
+
+
+    <string name="mainactivity_title_text">门管理</string>
+
+
 </resources>
