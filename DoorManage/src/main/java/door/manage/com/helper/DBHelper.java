@@ -3,6 +3,8 @@ package door.manage.com.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import test.greendao.dao.DaoMaster;
+
 /**
  * Created by Administrator on 2016/6/13.
  */

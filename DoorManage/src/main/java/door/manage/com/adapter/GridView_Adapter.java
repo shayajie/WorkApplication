@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import door.manage.com.R;
+import test.greendao.bean.Door;
+import test.greendao.bean.User;
 
 public class GridView_Adapter extends BaseAdapter {
 	private ArrayList<Door> doors;

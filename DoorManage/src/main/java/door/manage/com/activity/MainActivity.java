@@ -14,6 +14,7 @@ import door.manage.com.adapter.GridView_Adapter;
 import door.manage.com.service.UserService;
 import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
+import test.greendao.bean.User;
 
 /**
  * Created by shayajie on 2016/6/14.

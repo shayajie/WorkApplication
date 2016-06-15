@@ -13,9 +13,13 @@ import test.greendao.dao.ManagerDao;
 import test.greendao.dao.UserDao;
 
 public class DbUtil {
+    private final static String TAG = "DbUtil";
+
     private static DoorService doorService;
     private static ManagerService managerService;
     private static UserService userService;
+
+    private final static Long managerId = 1L;
 
     private static UserDao getUserDao() {
         return DbCore.getDaoSession().getUserDao();
@@ -50,20 +54,53 @@ public class DbUtil {
     }
 
     public static void firstaddUser(){
-        List<User> users =  getUserService().query("where name in (?,?)","supermanage","本机");
-        if(users.size()<1){
-//            User mUser1 = new User();
-//            mUser1.setName("supermanage");
-//            mUser1.setPassword("admin");
-//
-//            User mUser2 = new User();
-//            mUser2.setName("本机");
-//            mUser2.setPassword("123456");
-//
-//            getUserService().save(mUser1,mUser2);
-        }
 
+        checkManagerExist();
+
+
+        adduser();
+//        List<Manager> managers =getManagerService().query("where name=?","supermanage").size()
+//        if(managers.size()==1){
+//            managers.get(0).set
+//        }
 
 
     }
+
+    private static void checkManagerExist() {
+        List<Manager> managers =  getManagerService().query("where name=?","supermanage");
+        if(managers.size()<1){
+            Manager manager = new Manager();
+            manager.setName("supermanage");
+            manager.setPassword("admin");
+            manager.setManagerId(managerId);
+            getManagerService().save(manager);
+        }
+    }
+
+
+
+    public static void adduser(){
+        List<User> users = getUserService().query("where name=?","本机");
+        if(users.size()<1){
+            User mUser = new User();
+            mUser.setName("本机");
+//            while (getManagerId()==null){
+//                checkManagerExist();
+//                MyLog.d(TAG,""+getManagerId());
+//            }
+            mUser.setManagerId(managerId);
+            getUserService().save(mUser);
+        }
+    }
+
+    private static Long getManagerId() {
+        List<Manager> managers =  getManagerService().query("where name=?","supermanage");
+        if(managers.size() == 1){
+            return managers.get(0).getManagerId();
+        }
+        return null;
+    }
+
+
 }

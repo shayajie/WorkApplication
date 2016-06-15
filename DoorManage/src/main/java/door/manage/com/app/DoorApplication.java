@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import door.manage.com.utils.DbCore;
 import door.manage.com.utils.MyLog;
+import test.greendao.dao.DaoMaster;
+import test.greendao.dao.DaoSession;
 
 /**
  * Created by Administrator on 2016/6/13.
