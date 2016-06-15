@@ -1,5 +1,7 @@
 package com.example;
 
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
@@ -46,7 +48,6 @@ public class ExampleDaoGenerator {
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
         user.addStringProperty("password");
-        user.addBooleanProperty("issuper");
         user.addStringProperty("phone");
 
         Entity door = schema.addEntity("Door");
@@ -60,14 +61,23 @@ public class ExampleDaoGenerator {
         door.addStringProperty("password");
 
 
-        Entity userdoor =  schema.addEntity("UserDoor");
-        Property userId =  userdoor.addLongProperty("userId").getProperty();
-        Property doorId =  userdoor.addLongProperty("doorId").getProperty();
-        userdoor.addToOne(user,userId);
-        userdoor.addToOne(door,doorId);
 
-        user.addToMany(userdoor,userId);
-        door.addToMany(userdoor,doorId);
+        Entity manager = schema.addEntity("Manager");
+        manager.addLongProperty("managerId").primaryKey().autoincrement();
+        manager.addStringProperty("name");
+        // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
+        // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
+        manager.addStringProperty("password");
+        manager.addStringProperty("phone");
+
+        Property userId = door.addLongProperty("userId").getProperty();
+        door.addToOne(user,userId);
+        user.addToMany(door,userId).setName("doors");
+
+        Property managerId = user.addLongProperty("managerId").getProperty();
+        user.addToOne(manager,managerId);
+        manager.addToMany(user,managerId).setName("users");
+
 //        phone TEXT, encoderpulses TEXT, upperpulse TEXT, lowerpulse TEXT, password TEXT)";
     }
 
