@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <include layout="@layout/title_layout" />
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:orientation="vertical"
+        >
+        
+        <GridView 
+        android:id="@+id/door_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="3dp"
+        >
+        
+    </GridView>
+    </LinearLayout>
+    
+    
+<!--<RelativeLayout
+        android:id="@+id/relayout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:background="@color/loading_prompt_layout_background" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/loading"
+            android:textColor="@color/black_second_text_color"
+            android:textSize="@dimen/second_text_size" />
+    </RelativeLayout>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal"
+	    android:padding="4dp"
+	    >
+	    <LinearLayout 
+	        android:layout_weight="1"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:paddingRight="2dp"
+	        >
+	        <RelativeLayout 
+	            android:id="@+id/rise_door"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/rise_door_layout_bg"
+	            android:clickable="true"
+	            android:layout_marginBottom="2dp"
+	            >
+	            
+	        </RelativeLayout>
+	        <RelativeLayout 
+	            android:id="@+id/decline_door"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/decline_door_layout_bg"
+	            android:clickable="true"
+	            android:layout_marginBottom="2dp"
+	            >
+	            
+	        </RelativeLayout>
+	        <RelativeLayout 
+	            android:id="@+id/stop"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/stop_layout_bg"
+	            android:clickable="true"
+	            >
+	            
+	        </RelativeLayout>
+	    </LinearLayout>
+	    <LinearLayout 
+	        android:layout_weight="1"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:paddingLeft="2dp"
+	        >
+	        <RelativeLayout 
+	            android:id="@+id/pulse_setting"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/pulse_setting_layout_bg"
+	            android:clickable="true"
+	            android:layout_marginBottom="2dp"
+	            >
+	            
+	        </RelativeLayout>
+	        <RelativeLayout 
+	            android:id="@+id/remote_password"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/setting_layout_bg"
+	            android:clickable="true"
+	            android:layout_marginBottom="2dp"
+	            >
+	            
+	        </RelativeLayout>
+	        <RelativeLayout 
+	            android:id="@+id/door_number"
+	            android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dp"
+	            android:background="@drawable/setting_layout_bg"
+	            android:clickable="true"
+	            >
+	            
+	        </RelativeLayout>
+	    </LinearLayout>
+	</LinearLayout>  -->    
+
+</LinearLayout>

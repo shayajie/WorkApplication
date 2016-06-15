@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_layout_height">42.6dp</dimen>
+
+
+    <dimen name="door_control_height">106.6dp</dimen>
+
+    <dimen name="gridview_item_height">116.7dp</dimen>
+    <dimen name="door_img_width">61.8dp</dimen>
+    <dimen name="door_img_height">53.4dp</dimen>
+    <dimen name="tilte_back_img_height">17.8dp</dimen>
+    <dimen name="tilte_back_img_width">17.8dp</dimen>
+
+</resources>

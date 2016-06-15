@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 字体大小 -->
+    <dimen name="first_text_size">18sp</dimen>
+    <dimen name="second_text_size">13sp</dimen>
+    <!-- 控件宽高 -->
+    <dimen name="title_layout_height">51.2dp</dimen>
+    <dimen name="door_control_height">128dp</dimen>
+
+
+    <dimen name="gridview_item_height">140dp</dimen>
+    <dimen name="door_img_height">69.5dp</dimen>
+    <dimen name="door_img_width">64dp</dimen>
+
+    <dimen name="tilte_back_img_height">20dp</dimen>
+    <dimen name="tilte_back_img_width">20dp</dimen>
+
+</resources>
