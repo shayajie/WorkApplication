@@ -1,12 +1,19 @@
 package test.greendao.dao;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
+
+import test.greendao.bean.User;
 
 import test.greendao.bean.Door;
 
@@ -31,10 +38,12 @@ public class DoorDao extends AbstractDao<Door, Long> {
         public final static Property Upperpulse = new Property(5, String.class, "upperpulse", false, "UPPERPULSE");
         public final static Property Lowerpulse = new Property(6, String.class, "lowerpulse", false, "LOWERPULSE");
         public final static Property Password = new Property(7, String.class, "password", false, "PASSWORD");
+        public final static Property UserId = new Property(8, Long.class, "userId", false, "USER_ID");
     };
 
     private DaoSession daoSession;
 
+    private Query<Door> user_DoorsQuery;
 
     public DoorDao(DaoConfig config) {
         super(config);
@@ -56,7 +65,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
                 "\"ENCODERPULSES\" TEXT," + // 4: encoderpulses
                 "\"UPPERPULSE\" TEXT," + // 5: upperpulse
                 "\"LOWERPULSE\" TEXT," + // 6: lowerpulse
-                "\"PASSWORD\" TEXT);"); // 7: password
+                "\"PASSWORD\" TEXT," + // 7: password
+                "\"USER_ID\" INTEGER);"); // 8: userId
     }
 
     /** Drops the underlying database table. */
@@ -109,6 +119,11 @@ public class DoorDao extends AbstractDao<Door, Long> {
         if (password != null) {
             stmt.bindString(8, password);
         }
+ 
+        Long userId = entity.getUserId();
+        if (userId != null) {
+            stmt.bindLong(9, userId);
+        }
     }
 
     @Override
@@ -134,7 +149,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // encoderpulses
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // upperpulse
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // lowerpulse
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // password
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // password
+            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8) // userId
         );
         return entity;
     }
@@ -150,6 +166,7 @@ public class DoorDao extends AbstractDao<Door, Long> {
         entity.setUpperpulse(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setLowerpulse(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setPassword(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setUserId(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
      }
     
     /** @inheritdoc */
@@ -175,4 +192,109 @@ public class DoorDao extends AbstractDao<Door, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "doors" to-many relationship of User. */
+    public List<Door> _queryUser_Doors(Long userId) {
+        synchronized (this) {
+            if (user_DoorsQuery == null) {
+                QueryBuilder<Door> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.UserId.eq(null));
+                user_DoorsQuery = queryBuilder.build();
+            }
+        }
+        Query<Door> query = user_DoorsQuery.forCurrentThread();
+        query.setParameter(0, userId);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getUserDao().getAllColumns());
+            builder.append(" FROM DOOR T");
+            builder.append(" LEFT JOIN USER T0 ON T.\"USER_ID\"=T0.\"USER_ID\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected Door loadCurrentDeep(Cursor cursor, boolean lock) {
+        Door entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        User user = loadCurrentOther(daoSession.getUserDao(), cursor, offset);
+        entity.setUser(user);
+
+        return entity;    
+    }
+
+    public Door loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<Door> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<Door> list = new ArrayList<Door>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<Door> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<Door> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

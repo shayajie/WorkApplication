@@ -1,12 +1,19 @@
 package test.greendao.dao;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
+
+import test.greendao.bean.Manager;
 
 import test.greendao.bean.User;
 
@@ -26,12 +33,13 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property UserId = new Property(0, Long.class, "userId", true, "USER_ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property Issuper = new Property(3, Boolean.class, "issuper", false, "ISSUPER");
-        public final static Property Phone = new Property(4, String.class, "phone", false, "PHONE");
+        public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
+        public final static Property ManagerId = new Property(4, Long.class, "managerId", false, "MANAGER_ID");
     };
 
     private DaoSession daoSession;
 
+    private Query<User> manager_UsersQuery;
 
     public UserDao(DaoConfig config) {
         super(config);
@@ -49,8 +57,8 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"USER_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: userId
                 "\"NAME\" TEXT," + // 1: name
                 "\"PASSWORD\" TEXT," + // 2: password
-                "\"ISSUPER\" INTEGER," + // 3: issuper
-                "\"PHONE\" TEXT);"); // 4: phone
+                "\"PHONE\" TEXT," + // 3: phone
+                "\"MANAGER_ID\" INTEGER);"); // 4: managerId
     }
 
     /** Drops the underlying database table. */
@@ -79,14 +87,14 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindString(3, password);
         }
  
-        Boolean issuper = entity.getIssuper();
-        if (issuper != null) {
-            stmt.bindLong(4, issuper ? 1L: 0L);
-        }
- 
         String phone = entity.getPhone();
         if (phone != null) {
-            stmt.bindString(5, phone);
+            stmt.bindString(4, phone);
+        }
+ 
+        Long managerId = entity.getManagerId();
+        if (managerId != null) {
+            stmt.bindLong(5, managerId);
         }
     }
 
@@ -109,8 +117,8 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // userId
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // password
-            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // issuper
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // phone
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4) // managerId
         );
         return entity;
     }
@@ -121,8 +129,8 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setUserId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setPassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setIssuper(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
-        entity.setPhone(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setManagerId(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */
@@ -148,4 +156,109 @@ public class UserDao extends AbstractDao<User, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "users" to-many relationship of Manager. */
+    public List<User> _queryManager_Users(Long managerId) {
+        synchronized (this) {
+            if (manager_UsersQuery == null) {
+                QueryBuilder<User> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.ManagerId.eq(null));
+                manager_UsersQuery = queryBuilder.build();
+            }
+        }
+        Query<User> query = manager_UsersQuery.forCurrentThread();
+        query.setParameter(0, managerId);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getManagerDao().getAllColumns());
+            builder.append(" FROM USER T");
+            builder.append(" LEFT JOIN MANAGER T0 ON T.\"MANAGER_ID\"=T0.\"MANAGER_ID\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected User loadCurrentDeep(Cursor cursor, boolean lock) {
+        User entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        Manager manager = loadCurrentOther(daoSession.getManagerDao(), cursor, offset);
+        entity.setManager(manager);
+
+        return entity;    
+    }
+
+    public User loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<User> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<User> list = new ArrayList<User>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<User> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<User> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

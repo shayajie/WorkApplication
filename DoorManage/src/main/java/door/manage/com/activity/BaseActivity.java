@@ -1,6 +1,8 @@
 package door.manage.com.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,11 @@ public class BaseActivity extends Activity {
 //    protected RelativeLayout title_back,title_setting;
 //    protected TextView title_text;
     protected Resources resources;
+    protected Context mContext;
+    protected SharedPreferences shared;
+    protected SharedPreferences.Editor editor;
+
+
     protected boolean title_back_visible = false;
     protected boolean title_setting_visible = false;
     @Override
