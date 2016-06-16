@@ -32,7 +32,7 @@ public class DoorDao extends AbstractDao<Door, Long> {
     public static class Properties {
         public final static Property DoorId = new Property(0, Long.class, "doorId", true, "DOOR_ID");
         public final static Property Doorname = new Property(1, String.class, "doorname", false, "DOORNAME");
-        public final static Property Door = new Property(2, String.class, "door", false, "DOOR");
+        public final static Property Doornum = new Property(2, String.class, "doornum", false, "DOORNUM");
         public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
         public final static Property Encoderpulses = new Property(4, String.class, "encoderpulses", false, "ENCODERPULSES");
         public final static Property Upperpulse = new Property(5, String.class, "upperpulse", false, "UPPERPULSE");
@@ -60,7 +60,7 @@ public class DoorDao extends AbstractDao<Door, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"DOOR\" (" + //
                 "\"DOOR_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: doorId
                 "\"DOORNAME\" TEXT," + // 1: doorname
-                "\"DOOR\" TEXT," + // 2: door
+                "\"DOORNUM\" TEXT," + // 2: doornum
                 "\"PHONE\" TEXT," + // 3: phone
                 "\"ENCODERPULSES\" TEXT," + // 4: encoderpulses
                 "\"UPPERPULSE\" TEXT," + // 5: upperpulse
@@ -90,9 +90,9 @@ public class DoorDao extends AbstractDao<Door, Long> {
             stmt.bindString(2, doorname);
         }
  
-        String door = entity.getDoor();
-        if (door != null) {
-            stmt.bindString(3, door);
+        String doornum = entity.getDoornum();
+        if (doornum != null) {
+            stmt.bindString(3, doornum);
         }
  
         String phone = entity.getPhone();
@@ -144,7 +144,7 @@ public class DoorDao extends AbstractDao<Door, Long> {
         Door entity = new Door( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // doorId
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // doorname
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // door
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // doornum
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // encoderpulses
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // upperpulse
@@ -160,7 +160,7 @@ public class DoorDao extends AbstractDao<Door, Long> {
     public void readEntity(Cursor cursor, Door entity, int offset) {
         entity.setDoorId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setDoorname(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setDoor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDoornum(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setEncoderpulses(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setUpperpulse(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));

@@ -1,6 +1,7 @@
 package door.manage.com.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 import android.content.Context;
@@ -17,13 +18,13 @@ import test.greendao.bean.Door;
 import test.greendao.bean.User;
 
 public class GridView_Adapter extends BaseAdapter {
-	private ArrayList<Door> doors;
-	private ArrayList<User> users;
+	private List<Door> doors;
+	private List<User> users;
 	private Context mContext;
 //	private View addview;
 	private LayoutInflater mInflater;
 	private String flag = "";
-	public GridView_Adapter(ArrayList<Door> doors, Context mContext) {
+	public GridView_Adapter(List<Door> doors, Context mContext) {
 		super();
 		this.doors = doors;
 		this.mContext = mContext;
@@ -31,7 +32,7 @@ public class GridView_Adapter extends BaseAdapter {
 //		this.addview = addview;
 		this.mInflater = LayoutInflater.from(mContext);
 	}
-	public GridView_Adapter(Context mContext,ArrayList<User> users) {
+	public GridView_Adapter(Context mContext,List<User> users) {
 		super();
 		this.users = users;
 		this.mContext = mContext;

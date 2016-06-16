@@ -53,7 +53,7 @@ public class ExampleDaoGenerator {
         Entity door = schema.addEntity("Door");
         door.addLongProperty("doorId").primaryKey().autoincrement();
         door.addStringProperty("doorname");
-        door.addStringProperty("door");
+        door.addStringProperty("doornum");
         door.addStringProperty("phone");
         door.addStringProperty("encoderpulses");
         door.addStringProperty("upperpulse");

@@ -6,6 +6,7 @@ import java.util.List;
 import door.manage.com.service.DoorService;
 import door.manage.com.service.ManagerService;
 import door.manage.com.service.UserService;
+import test.greendao.bean.Door;
 import test.greendao.bean.Manager;
 import test.greendao.bean.User;
 import test.greendao.dao.DoorDao;
@@ -100,6 +101,25 @@ public class DbUtil {
             return managers.get(0).getManagerId();
         }
         return null;
+    }
+
+
+    public static boolean addDoor(Door door){
+        if(!checkDoorExist(door)){
+            getDoorService().save(door);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private static boolean checkDoorExist(Door door) {
+        List<Door> doors =  getDoorService().query("where doornum=?",door.getDoornum());
+        if(doors.size()>=1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

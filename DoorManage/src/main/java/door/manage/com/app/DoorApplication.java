@@ -4,6 +4,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import door.manage.com.utils.DbCore;
+import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
 import test.greendao.dao.DaoMaster;
 import test.greendao.dao.DaoSession;

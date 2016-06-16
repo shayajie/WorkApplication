@@ -14,7 +14,7 @@ public class Door {
 
     private Long doorId;
     private String doorname;
-    private String door;
+    private String doornum;
     private String phone;
     private String encoderpulses;
     private String upperpulse;
@@ -39,10 +39,10 @@ public class Door {
         this.doorId = doorId;
     }
 
-    public Door(Long doorId, String doorname, String door, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, Long userId) {
+    public Door(Long doorId, String doorname, String doornum, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, Long userId) {
         this.doorId = doorId;
         this.doorname = doorname;
-        this.door = door;
+        this.doornum = doornum;
         this.phone = phone;
         this.encoderpulses = encoderpulses;
         this.upperpulse = upperpulse;
@@ -73,12 +73,12 @@ public class Door {
         this.doorname = doorname;
     }
 
-    public String getDoor() {
-        return door;
+    public String getDoornum() {
+        return doornum;
     }
 
-    public void setDoor(String door) {
-        this.door = door;
+    public void setDoornum(String doornum) {
+        this.doornum = doornum;
     }
 
     public String getPhone() {

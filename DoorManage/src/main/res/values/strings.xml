@@ -100,10 +100,13 @@
     <string name="input_user_name">请输入用户昵称</string>
     <string name="input_user_phone">请输入手机号</string>
 
-
+    <string name="add_successed">添加成功</string>
+    <string name="doornum_exist">已存在该编号的门请勿重复添加</string>
 
 
     <string name="mainactivity_title_text">门管理</string>
-
+    <string name="adddooractivity_title_text">添加门</string>
+    <string name="doorcontrolactivity_title_text">控制中心</string>
+    <string name="startactivity_start_up_text">正在启动中…</string>
 
 </resources>
