@@ -9,6 +9,7 @@ public class AppInfo {
     public static final String SMS_DELIVERED_ACTION = "SMS_DELIVERED";
     public static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";
     public static final String SMS_DELIVER_ACTION="android.provider.Telephony.SMS_DELIVER";
+    public static final String SMS_RECEIVED = "sms_received";
     /**
      * LAST_TAG:已‘@’结尾
      */

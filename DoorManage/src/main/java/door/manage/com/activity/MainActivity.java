@@ -72,9 +72,11 @@ public class MainActivity extends BaseActivity {
                     intent.putExtra("userid", users.get(0).getUserId());
                     startActivityForResult(intent, 0);
                 } else {
-                    Intent intent = new Intent(mContext, DoorControlActivity.class);
-                    intent.putExtra("doorId", doors.get(position).getDoorId());
-                    startActivity(intent);
+
+                    sendMessage(doors.get(position).getPhone(),"这是一段测试文本");
+//                    Intent intent = new Intent(mContext, DoorControlActivity.class);
+//                    intent.putExtra("doorId", doors.get(position).getDoorId());
+//                    startActivity(intent);
                 }
 
             }
