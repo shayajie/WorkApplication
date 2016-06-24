@@ -76,6 +76,8 @@
     <string name="close_door">关门</string>
     <string name="stop_door">停止</string>
 
+    <string name="button_ensuer">确定</string>
+
     <string name="door_name">门名称:</string>
     <string name="door_id">门序号:</string>
     <string name="door_phone">门号码:</string>
@@ -108,5 +110,26 @@
     <string name="adddooractivity_title_text">添加门</string>
     <string name="doorcontrolactivity_title_text">控制中心</string>
     <string name="startactivity_start_up_text">正在启动中…</string>
+
+
+    <string name="control_close_door">关   门</string>
+    <string name="control_open_door">开   门</string>
+    <string name="control_stop_door">停   止</string>
+    <string name="control_up_door">上 升</string>
+    <string name="control_down_door">下 降</string>
+    <!--已关闭：0-->
+    <!--//			已开启：1-->
+    <!--//			已下降：2-->
+    <!--//			停止：  3-->
+    <!--//			下降中：4-->
+    <!--//			上升中：5-->
+    <string name="door_opened_text">已 开 启</string>
+    <string name="door_closed_text">已 关 闭</string>
+    <string name="door_stoped_text">停   止</string>
+    <string name="door_closing_text">关 闭 中</string>
+    <string name="door_openning_text">开 启 中</string>
+    <string name="door_falling_text">已 下 降</string>
+
+
 
 </resources>

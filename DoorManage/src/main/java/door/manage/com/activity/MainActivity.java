@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import door.manage.com.R;
 import door.manage.com.adapter.GridView_Adapter;
+import door.manage.com.app.AppInfo;
 import door.manage.com.utils.MyLog;
+import door.manage.com.utils.StringUtils;
 import test.greendao.bean.Door;
+import test.greendao.bean.GetDoorRequest;
 import test.greendao.bean.User;
 
 /**
@@ -36,6 +38,11 @@ public class MainActivity extends BaseActivity {
 
         initdata();
         initview();
+    }
+
+    @Override
+    protected void updateUI() {
+
     }
 
 
@@ -73,10 +80,16 @@ public class MainActivity extends BaseActivity {
                     startActivityForResult(intent, 0);
                 } else {
 
-                    sendMessage(doors.get(position).getPhone(),"这是一段测试文本");
-//                    Intent intent = new Intent(mContext, DoorControlActivity.class);
-//                    intent.putExtra("doorId", doors.get(position).getDoorId());
-//                    startActivity(intent);
+                    Door door = doors.get(position);
+                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
+                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
+                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
+//                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
+//                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
+//                    sendMessage(door.getPhone(), message);
+                    Intent intent = new Intent(mContext, DoorControlActivity.class);
+                    intent.putExtra("doorId", doors.get(position).getDoorId());
+                    startActivity(intent);
                 }
 
             }

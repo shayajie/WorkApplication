@@ -5,7 +5,7 @@ package door.manage.com.utils;
 public final class MyLog {
 
 
-	private static String sTag = "ActiveAndroid";
+	private static String sTag = "shayajie_TAG";
 	private static boolean sEnabled = false;
 
 	

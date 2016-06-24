@@ -59,7 +59,7 @@ public class ExampleDaoGenerator {
         door.addStringProperty("upperpulse");
         door.addStringProperty("lowerpulse");
         door.addStringProperty("password");
-
+        door.addStringProperty("doorstatus");
 
 
         Entity manager = schema.addEntity("Manager");

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import door.manage.com.R;
 import door.manage.com.utils.DbUtil;
+import door.manage.com.utils.MyLog;
 import test.greendao.bean.Door;
 
 public class AddDoorActivity extends BaseActivity implements OnClickListener {
@@ -35,6 +36,11 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 		isrefush = false;
 		userid = getIntent().getLongExtra("userid",0L);
 		initview();
+	}
+
+	@Override
+	protected void updateUI() {
+
 	}
 
 	private void initview() {
@@ -74,6 +80,7 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
             door.setLowerpulse(lowerpulse);
             door.setPassword(password);
             door.setUserId(userid);
+			door.setDoorstatus("0");
             boolean issucceed_add = DbUtil.addDoor(door);
             if(!isrefush){
                 isrefush = issucceed_add;

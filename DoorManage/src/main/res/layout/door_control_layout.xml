@@ -15,13 +15,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
         android:orientation="vertical"
         android:padding="3dp" >
-		
+
+        <RelativeLayout
+            android:id="@+id/stop_relayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gridview_item_shape_true"
+            android:clickable="true"
+            android:padding="5dp" >
+            <TextView
+                android:id="@+id/prompt_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_first_text_color"
+                android:textSize="@dimen/first_text_size"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+
         <LinearLayout 
             android:layout_width="match_parent"
            	android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             >
             <RelativeLayout 
                 android:id="@+id/open_door_relayout"
@@ -31,6 +51,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:layout_marginRight="2dp"
+
                 android:clickable="true"
                 android:background="@drawable/gridview_item_layout_bg"
                 >
@@ -62,14 +83,14 @@
                         <TextView 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="开   门"
+                            android:text="@string/control_open_door"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/white_first_text_color"
                             android:textSize="@dimen/first_text_size"
                             />
                     </RelativeLayout>
                 </LinearLayout>
-                 <RelativeLayout 
+         <!--        <RelativeLayout
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_marginTop="4dp"
@@ -84,7 +105,7 @@
                          android:textSize="@dimen/second_text_size"
                          android:textColor="@color/white_second_text_color"
                          />
-                 </RelativeLayout>   
+                 </RelativeLayout>   -->
             </RelativeLayout>
             <RelativeLayout 
                 android:id="@+id/close_door_relayout"
@@ -125,14 +146,14 @@
                         <TextView 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="关   门"
+                            android:text="@string/control_close_door"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/white_first_text_color"
                             android:textSize="@dimen/first_text_size"
                             />
                     </RelativeLayout>
                 </LinearLayout>
-                 <RelativeLayout 
+           <!--      <RelativeLayout
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_marginTop="4dp"
@@ -147,10 +168,144 @@
                          android:textSize="@dimen/second_text_size"
                          android:textColor="@color/white_second_text_color"
                          />
-                 </RelativeLayout>   
+                 </RelativeLayout>   -->
             </RelativeLayout>
         </LinearLayout>
-        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <RelativeLayout
+                android:id="@+id/up_door_relayout"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/door_control_height"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginRight="2dp"
+
+                android:clickable="true"
+                android:background="@drawable/gridview_item_layout_bg"
+                >
+                <LinearLayout
+                    android:id="@+id/door_control_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    >
+                    <RelativeLayout
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:id="@+id/up_door_indicator_lamp_imageview"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/white_first_text_color"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/control_up_door"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/white_first_text_color"
+                            android:textSize="@dimen/first_text_size"
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
+                <!--        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_below="@id/door_control_linearlayout"
+                            >
+                            <TextView
+                                android:id="@+id/open_door_prompt_message"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="正在发送指令"
+                                android:textSize="@dimen/second_text_size"
+                                android:textColor="@color/white_second_text_color"
+                                />
+                        </RelativeLayout>   -->
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/down_door_relayout"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/door_control_height"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:clickable="true"
+                android:background="@drawable/gridview_item_layout_bg"
+                >
+                <LinearLayout
+                    android:id="@+id/door_control_linearlayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    >
+                    <RelativeLayout
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:id="@+id/down_door_indicator_lamp_imageview"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@color/white_first_text_color"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/control_down_door"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/white_first_text_color"
+                            android:textSize="@dimen/first_text_size"
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
+                <!--      <RelativeLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="4dp"
+                          android:layout_below="@id/door_control_linearlayout2"
+                          >
+                          <TextView
+                              android:id="@+id/close_door_prompt_message"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="正在发送指令"
+                              android:layout_centerInParent="true"
+                              android:textSize="@dimen/second_text_size"
+                              android:textColor="@color/white_second_text_color"
+                              />
+                      </RelativeLayout>   -->
+            </RelativeLayout>
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/stop_relayout"
             android:layout_width="match_parent"
@@ -166,10 +321,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_centerInParent="true"
-                android:text="停止"
+                android:text="@string/control_stop_door"
                 android:textColor="@color/white_first_text_color"
                 android:textSize="@dimen/first_text_size" />
-			<TextView 
+		<!--	<TextView
 			    android:id="@+id/stop_prompt_message"
 			    android:layout_marginTop="5dp"
 			    android:layout_width="match_parent"
@@ -179,7 +334,7 @@
 			    android:gravity="center"
 			    android:textColor="@color/white_second_text_color"
 			    android:textSize="@dimen/second_text_size"
-			    />
+			    />-->
         </RelativeLayout>
         
         
@@ -206,11 +361,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="7" >
 
-                <TextView 
+                <TextView
+                    android:id="@+id/encoderpulses_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="44531231"
                     android:textColor="@color/white_first_text_color"
                     android:textSize="@dimen/first_text_size"
                     />
@@ -239,11 +394,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="7" >
 
-                <TextView 
+                <TextView
+                    android:id="@+id/upperpulse_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="44531231"
                     android:textColor="@color/white_first_text_color"
                     android:textSize="@dimen/first_text_size"
                     />
@@ -272,11 +427,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="7" >
 
-                <TextView 
+                <TextView
+                    android:id="@+id/lowerpulse_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="44531231"
                     android:textColor="@color/white_first_text_color"
                     android:textSize="@dimen/first_text_size"
                     />

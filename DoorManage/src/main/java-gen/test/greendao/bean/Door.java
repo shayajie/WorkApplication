@@ -20,6 +20,7 @@ public class Door {
     private String upperpulse;
     private String lowerpulse;
     private String password;
+    private String doorstatus;
     private Long userId;
 
     /** Used to resolve relations */
@@ -39,7 +40,7 @@ public class Door {
         this.doorId = doorId;
     }
 
-    public Door(Long doorId, String doorname, String doornum, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, Long userId) {
+    public Door(Long doorId, String doorname, String doornum, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, String doorstatus, Long userId) {
         this.doorId = doorId;
         this.doorname = doorname;
         this.doornum = doornum;
@@ -48,6 +49,7 @@ public class Door {
         this.upperpulse = upperpulse;
         this.lowerpulse = lowerpulse;
         this.password = password;
+        this.doorstatus = doorstatus;
         this.userId = userId;
     }
 
@@ -119,6 +121,14 @@ public class Door {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDoorstatus() {
+        return doorstatus;
+    }
+
+    public void setDoorstatus(String doorstatus) {
+        this.doorstatus = doorstatus;
     }
 
     public Long getUserId() {

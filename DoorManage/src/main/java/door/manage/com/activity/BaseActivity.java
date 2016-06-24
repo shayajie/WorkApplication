@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -26,7 +27,7 @@ import door.manage.com.utils.MyLog;
 /**
  * Created by shayajie on 2016/6/14.
  */
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
     private static final String TAG = "BaseActivity";
     //    protected RelativeLayout title_back,title_setting;
 //    protected TextView title_text;
@@ -60,16 +61,7 @@ public class BaseActivity extends Activity {
         editor = shared.edit();
         //短信
         mSmsManager = SmsManager.getDefault();
-        mSmsStatusReceiver = new SmsStatusReceiver();
-        registerReceiver(mSmsStatusReceiver, new IntentFilter(AppInfo.SMS_SEND_ACTIOIN));
 
-        mSmsDeliveryStatusReceiver = new SmsDeliveryStatusReceiver();
-        registerReceiver(mSmsDeliveryStatusReceiver, new IntentFilter(AppInfo.SMS_DELIVERED_ACTION));
-
-        mSmsReceiver = new MSmsReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("sms_received");
-        registerReceiver(mSmsReceiver, intentFilter);
 
         mUserService = DbUtil.getUserService();
         mDoorService = DbUtil.getDoorService();
@@ -126,6 +118,7 @@ public class BaseActivity extends Activity {
                 deliveryIntent);
     }
 
+    protected abstract void updateUI();
 
     public class SmsStatusReceiver extends BroadcastReceiver {
 
@@ -134,7 +127,7 @@ public class BaseActivity extends Activity {
             MyLog.d(TAG, "SmsStatusReceiver onReceive.");
             switch (getResultCode()) {
                 case Activity.RESULT_OK:
-                    MyLog.d(TAG, "Activity.RESULT_OK");
+                    MyLog.d(TAG, "SmsStatusReceiver onReceive.Activity.RESULT_OK");
                     break;
                 case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                     MyLog.d(TAG, "RESULT_ERROR_GENERIC_FAILURE");
@@ -149,6 +142,7 @@ public class BaseActivity extends Activity {
                     MyLog.d(TAG, "RESULT_ERROR_RADIO_OFF");
                     break;
             }
+//            abortBroadcast();
         }
     }
 
@@ -166,6 +160,7 @@ public class BaseActivity extends Activity {
 
                     break;
             }
+//            abortBroadcast();
         }
     }
 
@@ -178,18 +173,48 @@ public class BaseActivity extends Activity {
             MyLog.d(TAG, "action: " + action);
             if (SMS_RECEIVED_ACTION.equals(action)) {
                 Bundle bundle = intent.getExtras();
-
+                updateUI();
                 String messageContent = bundle.getString("message");
                 MyLog.d(TAG, messageContent);
+
             }
+//            abortBroadcast();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MyLog.d(TAG,"onStart");
+        mSmsStatusReceiver = new SmsStatusReceiver();
+        registerReceiver(mSmsStatusReceiver, new IntentFilter(AppInfo.SMS_SEND_ACTIOIN));
+
+        mSmsDeliveryStatusReceiver = new SmsDeliveryStatusReceiver();
+        registerReceiver(mSmsDeliveryStatusReceiver, new IntentFilter(AppInfo.SMS_DELIVERED_ACTION));
+
+        mSmsReceiver = new MSmsReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("sms_received");
+        registerReceiver(mSmsReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MyLog.d(TAG,"onStop");
+        unregisterReceiver(mSmsReceiver);
+        unregisterReceiver(mSmsStatusReceiver);
+        unregisterReceiver(mSmsDeliveryStatusReceiver);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mSmsReceiver);
-        unregisterReceiver(mSmsStatusReceiver);
-        unregisterReceiver(mSmsDeliveryStatusReceiver);
+
     }
 }

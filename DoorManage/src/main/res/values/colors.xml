@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+ <!--   <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FF4081</color> -->
+
+    <color name="colorPrimary">#FF454545</color>
+    <color name="colorPrimaryDark">#FF454545</color>
+    <color name="colorAccent">#ecf0f1</color>
 
     <drawable name="color_b">#44aaaaaa</drawable>
     <drawable name="color_a">#00000000</drawable>

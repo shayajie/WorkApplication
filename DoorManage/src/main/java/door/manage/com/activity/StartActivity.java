@@ -44,6 +44,12 @@ public class StartActivity extends BaseActivity{
             }
         });
     }
+
+    @Override
+    protected void updateUI() {
+
+    }
+
     private void firstRun() {
         boolean isFirstRun = shared.getBoolean("isFirstRun", true);
         if (isFirstRun) {

@@ -34,7 +34,9 @@
         <activity
             android:name=".activity.AddDoorActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".activity.DoorControlActivity"
+            android:screenOrientation="portrait"/>
 
 
         <receiver

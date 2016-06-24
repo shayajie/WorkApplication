@@ -14,14 +14,22 @@ public class AppInfo {
      * LAST_TAG:已‘@’结尾
      */
     public static final String LAST_TAG = "@";
-
+    //门读取请求
     public static final String READ_TAG = "0";
-
+    //门写入请求
     public static final String WRITE_TAG = "1";
 
+    //们操作状态0关闭1开启2上升3下降4停止
+    public static final String OPERATING_CLOSE = "0";
+    public static final String OPERATING_OPEN = "1";
+    public static final String OPERATING_UP = "2";
+    public static final String OPERATING_DOWN = "3";
+    public static final String OPERATING_STOP = "4";
+    //获取门状态标记请求返回标记
     public static final String A_TAG = "A";
 
     public static final String B_TAG = "B";
     public static final String C_TAG = "C";
     public static final String D_TAG = "D";
+    public static final String F_TAG = "F";
 }
