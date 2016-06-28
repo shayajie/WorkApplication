@@ -110,7 +110,7 @@
     <string name="adddooractivity_title_text">添加门</string>
     <string name="doorcontrolactivity_title_text">控制中心</string>
     <string name="startactivity_start_up_text">正在启动中…</string>
-
+    <string name="doorsettingactivity_title_text">门设置</string>
 
     <string name="control_close_door">关   门</string>
     <string name="control_open_door">开   门</string>
@@ -130,6 +130,13 @@
     <string name="door_openning_text">开 启 中</string>
     <string name="door_falling_text">已 下 降</string>
 
+    <string name="update_ensure">确认修改</string>
+    <string name="toast_nameisnull">门名称为空！</string>
+    <string name="toast_phoneisnull">门号码为空！</string>
+    <string name="toast_encoder_pulsesisnull">门编辑器脉冲数为空！</string>
+    <string name="toast_pulse_upperisnull">门上限位脉冲数为空！</string>
+    <string name="toast_pulse_lowerisnull">门下限位脉冲数为空！</string>
+    <string name="toast_passwordisnull">门密码为空！</string>
 
-
+    <string name="password_erro">密码错误</string>
 </resources>

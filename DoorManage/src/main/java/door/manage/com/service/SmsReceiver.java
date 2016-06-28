@@ -16,6 +16,7 @@ import door.manage.com.utils.StringUtils;
 import test.greendao.bean.ControlDoorResponse;
 import test.greendao.bean.Door;
 import test.greendao.bean.GetDoorResponse;
+import test.greendao.bean.UpDateDoorResponse;
 
 public class SmsReceiver extends BroadcastReceiver {
 	 	private static final String TAG = "SmsReceiver";
@@ -91,7 +92,18 @@ public class SmsReceiver extends BroadcastReceiver {
 								}
                                 break;
                             case AppInfo.C_TAG:
-
+								MyLog.d(TAG,"AppInfo.C_TAG");
+								UpDateDoorResponse upDateDoorResponse = StringUtils.upDateDoorResponse(strings);
+								doors = mDoorService.query("where doornum=?",upDateDoorResponse.getDoornum());
+								if(doors.size()==1){
+									Door door = doors.get(0);
+									door.setPhone(upDateDoorResponse.getPhone());
+									door.setEncoderpulses(upDateDoorResponse.getEncoderpulses());
+									door.setUpperpulse(upDateDoorResponse.getUpperpulse());
+									door.setLowerpulse(upDateDoorResponse.getLowerpulse());
+									door.setDoorstatus(upDateDoorResponse.getOperatingstatus());
+									mDoorService.update(door);
+								}
                                 break;
                             case AppInfo.D_TAG:
 

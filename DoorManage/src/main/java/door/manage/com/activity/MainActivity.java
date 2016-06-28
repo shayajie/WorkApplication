@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 MyLog.d(TAG,"我是设置按钮");
+                Intent intent = new Intent(mContext,ManagerUsersActivity.class);
+                startActivityForResult(intent,0);
             }
         });
 
@@ -83,7 +85,7 @@ public class MainActivity extends BaseActivity {
                     Door door = doors.get(position);
                     GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
                     MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
-                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
+//                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
 //                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
 //                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
 //                    sendMessage(door.getPhone(), message);

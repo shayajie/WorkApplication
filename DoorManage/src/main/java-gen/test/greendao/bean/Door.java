@@ -188,4 +188,23 @@ public class Door {
         myDao.refresh(this);
     }
 
+    @Override
+    public String toString() {
+        return "Door{" +
+                "doorId=" + doorId +
+                ", doorname='" + doorname + '\'' +
+                ", doornum='" + doornum + '\'' +
+                ", phone='" + phone + '\'' +
+                ", encoderpulses='" + encoderpulses + '\'' +
+                ", upperpulse='" + upperpulse + '\'' +
+                ", lowerpulse='" + lowerpulse + '\'' +
+                ", password='" + password + '\'' +
+                ", doorstatus='" + doorstatus + '\'' +
+                ", userId=" + userId +
+                ", daoSession=" + daoSession +
+                ", myDao=" + myDao +
+                ", user=" + user +
+                ", user__resolvedKey=" + user__resolvedKey +
+                '}';
+    }
 }

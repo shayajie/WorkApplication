@@ -3,6 +3,6 @@
     <item android:drawable="@drawable/gridview_item_shape_true" android:state_pressed="true"/>
     <item android:drawable="@drawable/btn_bg_shape" android:state_pressed="false"/>    
         
-    
+    <!--<item android:drawable="@drawable/gridview_item_shape_true" android:state_checkable="false"/>-->
 
 </selector>

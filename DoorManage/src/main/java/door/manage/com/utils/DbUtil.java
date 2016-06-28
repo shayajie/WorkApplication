@@ -20,7 +20,7 @@ public class DbUtil {
     private static ManagerService managerService;
     private static UserService userService;
 
-    private final static Long managerId = 1L;
+    public final static Long managerId = 1L;
 
     private static UserDao getUserDao() {
         return DbCore.getDaoSession().getUserDao();

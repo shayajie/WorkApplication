@@ -27,8 +27,9 @@ public class AppInfo {
     public static final String OPERATING_STOP = "4";
     //获取门状态标记请求返回标记
     public static final String A_TAG = "A";
-
+    //控制门
     public static final String B_TAG = "B";
+    //修改门
     public static final String C_TAG = "C";
     public static final String D_TAG = "D";
     public static final String F_TAG = "F";

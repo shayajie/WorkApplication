@@ -3,6 +3,7 @@ package door.manage.com.activity;
 import java.util.List;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,9 +16,7 @@ import android.widget.TextView;
 
 import door.manage.com.R;
 import door.manage.com.app.AppInfo;
-import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
-import door.manage.com.utils.StringUtils;
 import test.greendao.bean.ControlDoorRequest;
 import test.greendao.bean.Door;
 
@@ -27,7 +26,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 	private Door door;
 	private Long doorID;
 
-	private RelativeLayout open_door_relayout,close_door_relayout,stop_relayout;
+	private RelativeLayout open_door_relayout,close_door_relayout,up_door_relayout,down_door_relayout,stop_relayout;
 	//close_door_prompt_message,stop_prompt_message
 	private TextView prompt_message,encoderpulses_textview,upperpulse_textview,lowerpulse_textview;
 	private ImageView open_door_indicator_lamp_imageview,close_door_indicator_lamp_imageview,up_door_indicator_lamp_imageview,down_door_indicator_lamp_imageview;
@@ -48,7 +47,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 	@Override
 	protected void updateUI() {
 		MyLog.d(Tag,"updateUI");
-		door = DbUtil.getDoorService().query(doorID);
+		door = mDoorService.query(doorID);
 		UIData(door);
 
 	}
@@ -57,6 +56,38 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 		encoderpulses_textview.setText(door.getEncoderpulses());
 		upperpulse_textview.setText(door.getUpperpulse());
 		lowerpulse_textview.setText(door.getLowerpulse());
+		if("0".equals(door.getDoorstatus())){
+			open_door_relayout.setClickable(true);
+			open_door_relayout.setBackgroundResource(R.drawable.gridview_item_layout_bg);
+
+			close_door_relayout.setClickable(false);
+			close_door_relayout.setBackgroundResource(R.drawable.controlpresstrue_bg);
+
+			stop_relayout.setClickable(false);
+			stop_relayout.setBackgroundResource(R.drawable.controlpresstrue_bg);
+
+			up_door_relayout.setClickable(false);
+			up_door_relayout.setBackgroundResource(R.drawable.controlpresstrue_bg);
+
+			down_door_relayout.setClickable(false);
+			down_door_relayout.setBackgroundResource(R.drawable.controlpresstrue_bg);
+
+		}else{
+			open_door_relayout.setClickable(false);
+			open_door_relayout.setBackgroundResource(R.drawable.controlpresstrue_bg);
+
+			close_door_relayout.setClickable(true);
+			close_door_relayout.setBackgroundResource(R.drawable.gridview_item_layout_bg);
+
+			stop_relayout.setClickable(true);
+			stop_relayout.setBackgroundResource(R.drawable.gridview_item_layout_bg);
+
+			up_door_relayout.setClickable(true);
+			up_door_relayout.setBackgroundResource(R.drawable.gridview_item_layout_bg);
+
+			down_door_relayout.setClickable(true);
+			down_door_relayout.setBackgroundResource(R.drawable.gridview_item_layout_bg);
+		}
 		switch (door.getDoorstatus()){
 //			状态
 //			已关闭：0
@@ -68,9 +99,11 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 
 			case "0":
 				prompt_message.setText(resources.getString(R.string.door_closed_text));
+
 				break;
 			case "1":
 				prompt_message.setText(resources.getString(R.string.door_opened_text));
+
 				break;
 			case "2":
 				prompt_message.setText(resources.getString(R.string.door_falling_text));
@@ -107,9 +140,14 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 		open_door_relayout = (RelativeLayout) findViewById(R.id.open_door_relayout);
 		close_door_relayout = (RelativeLayout) findViewById(R.id.close_door_relayout);
 		stop_relayout = (RelativeLayout) findViewById(R.id.stop_relayout);
+		up_door_relayout = (RelativeLayout) findViewById(R.id.up_door_relayout);
+		down_door_relayout = (RelativeLayout) findViewById(R.id.down_door_relayout);
+
 		open_door_relayout.setOnClickListener(this);
 		close_door_relayout.setOnClickListener(this);
 		stop_relayout.setOnClickListener(this);
+		up_door_relayout.setOnClickListener(this);
+		down_door_relayout.setOnClickListener(this);
 
 		prompt_message = (TextView) findViewById(R.id.prompt_message);
 
@@ -126,8 +164,14 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 //		lowerpulse_textview.setText(door.getLowerpulse());
 
 		open_door_indicator_lamp_imageview = (ImageView) findViewById(R.id.open_door_indicator_lamp_imageview);
+		open_door_indicator_lamp_imageview.setVisibility(View.GONE);
 		close_door_indicator_lamp_imageview = (ImageView) findViewById(R.id.close_door_indicator_lamp_imageview);
-//		open_toggleButton = (ToggleButton) findViewById(R.id.open_toggleButton);
+		close_door_indicator_lamp_imageview.setVisibility(View.GONE);
+		up_door_indicator_lamp_imageview = (ImageView) findViewById(R.id.up_door_indicator_lamp_imageview);
+		up_door_indicator_lamp_imageview.setVisibility(View.GONE);
+		down_door_indicator_lamp_imageview = (ImageView) findViewById(R.id.down_door_indicator_lamp_imageview);
+		down_door_indicator_lamp_imageview.setVisibility(View.GONE);
+// 		open_toggleButton = (ToggleButton) findViewById(R.id.open_toggleButton);
 //		close_toggleButton = (ToggleButton) findViewById(R.id.close_toggleButton);
 //		stop_toggleButton = (ToggleButton) findViewById(R.id.stop_toggleButton);
 //		open_toggleButton.setChecked(true);
@@ -146,7 +190,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void initdata() {
-		door = DbUtil.getDoorService().query(doorID);
+		door = mDoorService.query(doorID);
 
 	}
 
@@ -158,20 +202,22 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 			finish();
 			break;
 		case R.id.title_setting:
-//			Intent intent = new Intent(mContext, DoorSettingActivity.class);
-//			startActivity(intent);
+			Intent intent = new Intent(mContext, DoorSettingActivity.class);
+			intent.putExtra("doorId", doorID);
+
+			startActivityForResult(intent,0);
 			break;
 		case R.id.open_door_relayout:
             request  = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_OPEN,door.getPhone());
-
-            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(Tag,"open_door_relayout");
+//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
 			break;
 		case R.id.close_door_relayout:
             request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_CLOSE,door.getPhone());
-
-            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(Tag,"close_door_relayout");
+//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			close_door_prompt_message.setText("正在开启");
 //			Bitmap color = BitmapFactory.decodeResource(getResources(), R.drawable.green_bg);
 //			BitmapDrawable bd= new BitmapDrawable(getResources(), color);
@@ -180,21 +226,21 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.stop_relayout:
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_STOP,door.getPhone());
-
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(Tag,"stop_relayout");
+//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			stop_prompt_message.setText("发送指令中");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 //			close_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 			break;
         case R.id.up_door_relayout:
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_UP,door.getPhone());
-
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(Tag,"up_door_relayout");
+//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
         case R.id.down_door_relayout:
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_DOWN,door.getPhone());
-
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(Tag,"down_door_relayout");
+//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
 		default:
 			break;
@@ -208,4 +254,17 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
         animation.setRepeatMode(Animation.REVERSE); //   
         iv_chat_head.setAnimation(animation);  
 }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (resultCode) {
+			case 1:
+				updateUI();
+				break;
+
+			default:
+				break;
+		}
+	}
 }

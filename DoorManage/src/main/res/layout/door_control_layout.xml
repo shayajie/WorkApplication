@@ -56,7 +56,6 @@
                 android:background="@drawable/gridview_item_layout_bg"
                 >
                 <LinearLayout 
-                    android:id="@+id/door_control_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -119,7 +118,6 @@
                 android:background="@drawable/gridview_item_layout_bg"
                 >
                 <LinearLayout 
-                    android:id="@+id/door_control_linearlayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -190,7 +188,6 @@
                 android:background="@drawable/gridview_item_layout_bg"
                 >
                 <LinearLayout
-                    android:id="@+id/door_control_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -253,7 +250,6 @@
                 android:background="@drawable/gridview_item_layout_bg"
                 >
                 <LinearLayout
-                    android:id="@+id/door_control_linearlayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

@@ -37,7 +37,9 @@
         <activity
             android:name=".activity.DoorControlActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".activity.DoorSettingActivity"
+            android:screenOrientation="portrait"/>
 
         <receiver
             android:name=".service.SmsReceiver"
