@@ -113,6 +113,8 @@ public class DbUtil {
         }
     }
 
+
+
     private static boolean checkDoorExist(Door door) {
         List<Door> doors =  getDoorService().query("where doornum=?",door.getDoornum());
         if(doors.size()>=1){
@@ -122,5 +124,22 @@ public class DbUtil {
         }
     }
 
+    public static boolean addUser(User user){
+        if(!checkUserExist(user)){
+            getUserService().save(user);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private static boolean checkUserExist(User user) {
+        List<User> users =  getUserService().query("where phone=?",user.getPhone());
+        if(users.size()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }

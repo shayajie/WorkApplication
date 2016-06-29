@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/title_layout"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        >
+
+        <LinearLayout
+            android:id="@+id/door_setting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_color" >
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+                        <Button
+                            android:id="@+id/onekey_close_door_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/onekey_close_door"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_name"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_name_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_name"
+                                android:inputType="text"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/gridview_layout_background_pressedfalse_color" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_phone"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_phone_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_phone"
+                                android:inputType="phone"
+                                android:maxLength="11"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/gridview_layout_background_pressedfalse_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_encoder_pulses"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_encoder_pulses_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_encoder_pulses"
+                                android:inputType="number"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/gridview_layout_background_pressedfalse_color" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_pulse_upper_limit"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_pulse_upper_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_pulse_upper_limit"
+                                android:inputType="number"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/gridview_layout_background_pressedfalse_color" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_pulse_lower_limit"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_pulse_lower_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_pulse_lower_limit"
+                                android:inputType="number"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="5dp" >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:gravity="end"
+                                android:text="@string/door_password"
+                                android:textColor="@color/white_first_text_color"
+                                android:textSize="@dimen/second_text_size" />
+
+                            <EditText
+                                android:id="@+id/update_door_password_edittext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="7"
+                                android:hint="@string/input_door_password"
+                                android:inputType="textVisiblePassword"
+                                android:textColor="@color/white_first_text_color" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/update_door_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/update_ensure"
+                            android:textColor="@color/white_first_text_color"
+                            />
+
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+         <include layout="@layout/verification_password_layout"
+              />
+    </FrameLayout>
+
+</LinearLayout>

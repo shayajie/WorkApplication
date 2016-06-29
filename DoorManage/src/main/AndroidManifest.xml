@@ -41,6 +41,24 @@
             android:name=".activity.DoorSettingActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activity.ManagerUsersActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.AddUserActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.UserDoorActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ManagerControlDoorActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ManagerDoorSettingActivity"
+            android:screenOrientation="portrait"/>
+
         <receiver
             android:name=".service.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS" >
