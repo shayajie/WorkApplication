@@ -21,9 +21,7 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 //	private TextView title;
 //	private RelativeLayout title_setting;
 //	private RelativeLayout title_back;
-	
 //	private Context mContext;
-
 
 	private boolean isrefush = false;
 	private Long userid;

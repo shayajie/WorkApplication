@@ -39,7 +39,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
         public final static Property Lowerpulse = new Property(6, String.class, "lowerpulse", false, "LOWERPULSE");
         public final static Property Password = new Property(7, String.class, "password", false, "PASSWORD");
         public final static Property Doorstatus = new Property(8, String.class, "doorstatus", false, "DOORSTATUS");
-        public final static Property UserId = new Property(9, Long.class, "userId", false, "USER_ID");
+        public final static Property Doorlock = new Property(9, String.class, "doorlock", false, "DOORLOCK");
+        public final static Property UserId = new Property(10, Long.class, "userId", false, "USER_ID");
     };
 
     private DaoSession daoSession;
@@ -68,7 +69,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
                 "\"LOWERPULSE\" TEXT," + // 6: lowerpulse
                 "\"PASSWORD\" TEXT," + // 7: password
                 "\"DOORSTATUS\" TEXT," + // 8: doorstatus
-                "\"USER_ID\" INTEGER);"); // 9: userId
+                "\"DOORLOCK\" TEXT," + // 9: doorlock
+                "\"USER_ID\" INTEGER);"); // 10: userId
     }
 
     /** Drops the underlying database table. */
@@ -127,9 +129,14 @@ public class DoorDao extends AbstractDao<Door, Long> {
             stmt.bindString(9, doorstatus);
         }
  
+        String doorlock = entity.getDoorlock();
+        if (doorlock != null) {
+            stmt.bindString(10, doorlock);
+        }
+ 
         Long userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindLong(10, userId);
+            stmt.bindLong(11, userId);
         }
     }
 
@@ -158,7 +165,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // lowerpulse
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // password
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // doorstatus
-            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9) // userId
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // doorlock
+            cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10) // userId
         );
         return entity;
     }
@@ -175,7 +183,8 @@ public class DoorDao extends AbstractDao<Door, Long> {
         entity.setLowerpulse(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setPassword(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setDoorstatus(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setUserId(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
+        entity.setDoorlock(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setUserId(cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10));
      }
     
     /** @inheritdoc */

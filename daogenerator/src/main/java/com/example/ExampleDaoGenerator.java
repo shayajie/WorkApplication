@@ -60,7 +60,7 @@ public class ExampleDaoGenerator {
         door.addStringProperty("lowerpulse");
         door.addStringProperty("password");
         door.addStringProperty("doorstatus");
-
+        door.addStringProperty("doorlock");
 
         Entity manager = schema.addEntity("Manager");
         manager.addLongProperty("managerId").primaryKey().autoincrement();

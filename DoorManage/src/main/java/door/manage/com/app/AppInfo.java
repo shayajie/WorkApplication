@@ -1,10 +1,14 @@
 package door.manage.com.app;
 
+import door.manage.com.utils.MyLog;
+
 /**
  * Created by Administrator on 2016/6/14.
  */
 public class AppInfo {
     public static final String  DB_NAME = "doormanage";
+
+
     public static final String SMS_SEND_ACTIOIN = "SMS_SEND";
     public static final String SMS_DELIVERED_ACTION = "SMS_DELIVERED";
     public static final String SMS_RECEIVED_ACTION = "android.provider.Telephony.SMS_RECEIVED";
@@ -33,4 +37,14 @@ public class AppInfo {
     public static final String C_TAG = "C";
     public static final String D_TAG = "D";
     public static final String F_TAG = "F";
+
+    public static boolean isSendMessage = false;
+
+    public static void setIsSendMessage(boolean sendMessage){
+
+        MyLog.d("AppInfo","setIsSendMessage ");
+
+        isSendMessage = sendMessage;
+    }
+
 }

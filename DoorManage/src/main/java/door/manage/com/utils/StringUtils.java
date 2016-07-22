@@ -6,6 +6,8 @@ import test.greendao.bean.ControlDoorResponse;
 import test.greendao.bean.Door;
 import test.greendao.bean.GetDoorRequest;
 import test.greendao.bean.GetDoorResponse;
+import test.greendao.bean.LockDoorRequest;
+import test.greendao.bean.LockDoorResponse;
 import test.greendao.bean.UpDateDoorRequest;
 import test.greendao.bean.UpDateDoorResponse;
 
@@ -66,6 +68,24 @@ public class StringUtils {
         return stringBuilder.toString();
     }
 
+
+
+    public static String lockDoorRequest(LockDoorRequest lockDoorRequest){
+        StringBuilder stringBuilder=  new StringBuilder();
+        stringBuilder.append(lockDoorRequest.getProtocol_object());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(lockDoorRequest.getDoornum());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(lockDoorRequest.getOperating());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(lockDoorRequest.getRemotelock());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(lockDoorRequest.getPhone());
+
+        return stringBuilder.toString();
+    }
+
+
     public static GetDoorResponse getDoorResponse(String[] strings){
         if(strings.length>1){
             MyLog.d(TAG,""+strings.length);
@@ -89,6 +109,15 @@ public class StringUtils {
             MyLog.d(TAG,""+strings.length);
             UpDateDoorResponse upDateDoorResponse = new UpDateDoorResponse(strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6],strings[7]);
             return upDateDoorResponse;
+        }
+        return null;
+    }
+
+    public static LockDoorResponse lockDoorResponse(String[] strings){
+        if(strings.length>1){
+            MyLog.d(TAG,""+strings.length);
+            LockDoorResponse lockDoorResponse = new LockDoorResponse(strings[0],strings[1],strings[2],strings[3],strings[4]);
+            return lockDoorResponse;
         }
         return null;
     }

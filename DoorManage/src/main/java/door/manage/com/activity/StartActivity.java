@@ -20,6 +20,7 @@ public class StartActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View startView = View.inflate(this, R.layout.start_layout,null);
+        MyLog.d(TAG,"onCreate");
         setContentView(startView);
         shared = getSharedPreferences("appinfo", 0);
         editor = shared.edit();
@@ -35,6 +36,7 @@ public class StartActivity extends BaseActivity{
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                MyLog.d(TAG,"onAnimationEnd");
                 redirectto();
             }
 
@@ -59,9 +61,11 @@ public class StartActivity extends BaseActivity{
             editor.putBoolean("isFirstRun", false);
             editor.commit();
             MyLog.d(TAG,"==============firstrun_end");
+
         }
     }
     private void redirectto() {
+        MyLog.d(TAG,"redirectto");
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();

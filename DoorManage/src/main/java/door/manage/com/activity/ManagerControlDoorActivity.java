@@ -15,6 +15,7 @@ import java.util.List;
 import door.manage.com.R;
 import door.manage.com.app.AppInfo;
 import door.manage.com.utils.MyLog;
+import door.manage.com.utils.StringUtils;
 import test.greendao.bean.ControlDoorRequest;
 import test.greendao.bean.Door;
 
@@ -210,15 +211,15 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.open_door_relayout:
                 request  = new ControlDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,AppInfo.OPERATING_OPEN,door.getPhone());
-                MyLog.d(Tag,"open_door_relayout");
-//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
+            sendMessage(door.getPhone(), StringUtils.controlDoorRequest(request));
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
                 break;
             case R.id.close_door_relayout:
                 request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_CLOSE,door.getPhone());
-                MyLog.d(Tag,"close_door_relayout");
-//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
+            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			close_door_prompt_message.setText("正在开启");
 //			Bitmap color = BitmapFactory.decodeResource(getResources(), R.drawable.green_bg);
 //			BitmapDrawable bd= new BitmapDrawable(getResources(), color);
@@ -227,21 +228,21 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.stop_relayout:
                 request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_STOP,door.getPhone());
-                MyLog.d(Tag,"stop_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			stop_prompt_message.setText("发送指令中");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 //			close_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
                 break;
             case R.id.up_door_relayout:
                 request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_UP,door.getPhone());
-                MyLog.d(Tag,"up_door_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
             case R.id.down_door_relayout:
                 request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_DOWN,door.getPhone());
-                MyLog.d(Tag,"down_door_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
             default:
                 break;

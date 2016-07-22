@@ -23,8 +23,11 @@ public class DoorApplication extends Application{
     public void onCreate() {
         super.onCreate();
         //日志打印开关
+
         DbCore.init(this);
         MyLog.setEnabled(true);
+        MyLog.d("DoorApplication","oncreate");
+        AppInfo.setIsSendMessage(false);
     }
 
 }

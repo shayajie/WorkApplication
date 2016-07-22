@@ -109,13 +109,16 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected void sendMessage(String sender, String message) {
-        PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new
-                Intent(AppInfo.SMS_SEND_ACTIOIN), 0);
-        PendingIntent deliveryIntent = PendingIntent.getBroadcast(this, 0,
-                new Intent(AppInfo.SMS_DELIVERED_ACTION), 0);
+        if(AppInfo.isSendMessage){
+            PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new
+                    Intent(AppInfo.SMS_SEND_ACTIOIN), 0);
+            PendingIntent deliveryIntent = PendingIntent.getBroadcast(this, 0,
+                    new Intent(AppInfo.SMS_DELIVERED_ACTION), 0);
 
-        mSmsManager.sendTextMessage(sender, null, message, sentIntent,
-                deliveryIntent);
+            mSmsManager.sendTextMessage(sender, null, message, sentIntent,
+                    deliveryIntent);
+        }
+
     }
 
     protected abstract void updateUI();

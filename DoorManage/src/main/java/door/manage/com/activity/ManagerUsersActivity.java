@@ -1,7 +1,9 @@
 package door.manage.com.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -9,12 +11,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import door.manage.com.R;
 import door.manage.com.adapter.GridView_Adapter;
 import door.manage.com.utils.DbUtil;
+import door.manage.com.utils.MyLog;
+import test.greendao.bean.Door;
 import test.greendao.bean.Manager;
 import test.greendao.bean.User;
 
@@ -67,6 +72,19 @@ public class ManagerUsersActivity extends BaseActivity implements View.OnClickLi
 
             }
         });
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (users.size() == position) {
+                } else {
+                    dialog(users.get(position));
+
+                }
+                return true;
+            }
+        });
+
         verification_layout = (LinearLayout) findViewById(R.id.verification_layout);
 
         password_prompt_text = (TextView) findViewById(R.id.password_prompt_text);
@@ -139,5 +157,27 @@ public class ManagerUsersActivity extends BaseActivity implements View.OnClickLi
             default:
                 break;
         }
+    }
+    protected void dialog(final User user) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ManagerUsersActivity.this);
+        builder.setTitle("提示");
+        builder.setMessage("是否删除？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyLog.d(Tag,"door删除");
+                mUserService.delete(user);
+                updateUI();
+                Toast.makeText(mContext,resources.getString(R.string.delete_done),Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 }

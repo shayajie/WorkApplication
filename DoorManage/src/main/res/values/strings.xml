@@ -146,5 +146,8 @@
     <string name="password_erro">密码错误</string>
     <string name="input_password">请输入密码</string>
 
-    <string name="onekey_close_door">一键锁门</string>
+    <string name="onekey_lock_door">一键锁门</string>
+
+    <string name="updata_done">修改完毕</string>
+    <string name="delete_done">删除完毕</string>
 </resources>

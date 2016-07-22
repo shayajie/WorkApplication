@@ -1,10 +1,13 @@
 package door.manage.com.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -63,7 +66,7 @@ public class UserDoorActivity extends BaseActivity{
                     Door door = doors.get(position);
                     GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
                     MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
-//                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
+                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
 //                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
 //                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
 //                    sendMessage(door.getPhone(), message);
@@ -71,6 +74,28 @@ public class UserDoorActivity extends BaseActivity{
                     intent.putExtra("doorId", doors.get(position).getDoorId());
                     startActivity(intent);
                 }
+            }
+        });
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                MyLog.d(TAG,"长按");
+                if (doors.size() == position) {
+                } else {
+                    dialog(doors.get(position));
+//                    Door door = doors.get(position);
+//                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
+//                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
+//                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
+////                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
+////                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
+////                    sendMessage(door.getPhone(), message);
+//                    Intent intent = new Intent(mContext, DoorControlActivity.class);
+//                    intent.putExtra("doorId", doors.get(position).getDoorId());
+//                    startActivity(intent);
+                }
+
+                return true;
             }
         });
         updateUI();
@@ -98,5 +123,27 @@ public class UserDoorActivity extends BaseActivity{
             default:
                 break;
         }
+    }
+    protected void dialog(final Door door) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserDoorActivity.this);
+        builder.setTitle("提示");
+        builder.setMessage("是否删除？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyLog.d(TAG,"door删除");
+                mDoorService.delete(door);
+                updateUI();
+                Toast.makeText(mContext,resources.getString(R.string.delete_done),Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 }

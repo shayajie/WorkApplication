@@ -20,10 +20,12 @@ public class DbCore {
     private static String DB_NAME;
 
     public static void init(Context context) {
+        MyLog.d("DbCore","init(context) ");
         init(context, DEFAULT_DB_NAME);
     }
 
     public static void init(Context context, String dbName) {
+        MyLog.d("DbCore","init(context,string) ");
         if (context == null) {
             throw new IllegalArgumentException("context can't be null");
         }

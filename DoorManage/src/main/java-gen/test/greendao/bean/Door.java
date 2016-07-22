@@ -21,6 +21,7 @@ public class Door {
     private String lowerpulse;
     private String password;
     private String doorstatus;
+    private String doorlock;
     private Long userId;
 
     /** Used to resolve relations */
@@ -40,7 +41,7 @@ public class Door {
         this.doorId = doorId;
     }
 
-    public Door(Long doorId, String doorname, String doornum, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, String doorstatus, Long userId) {
+    public Door(Long doorId, String doorname, String doornum, String phone, String encoderpulses, String upperpulse, String lowerpulse, String password, String doorstatus, String doorlock, Long userId) {
         this.doorId = doorId;
         this.doorname = doorname;
         this.doornum = doornum;
@@ -50,6 +51,7 @@ public class Door {
         this.lowerpulse = lowerpulse;
         this.password = password;
         this.doorstatus = doorstatus;
+        this.doorlock = doorlock;
         this.userId = userId;
     }
 
@@ -131,6 +133,14 @@ public class Door {
         this.doorstatus = doorstatus;
     }
 
+    public String getDoorlock() {
+        return doorlock;
+    }
+
+    public void setDoorlock(String doorlock) {
+        this.doorlock = doorlock;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -188,23 +198,4 @@ public class Door {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "Door{" +
-                "doorId=" + doorId +
-                ", doorname='" + doorname + '\'' +
-                ", doornum='" + doornum + '\'' +
-                ", phone='" + phone + '\'' +
-                ", encoderpulses='" + encoderpulses + '\'' +
-                ", upperpulse='" + upperpulse + '\'' +
-                ", lowerpulse='" + lowerpulse + '\'' +
-                ", password='" + password + '\'' +
-                ", doorstatus='" + doorstatus + '\'' +
-                ", userId=" + userId +
-                ", daoSession=" + daoSession +
-                ", myDao=" + myDao +
-                ", user=" + user +
-                ", user__resolvedKey=" + user__resolvedKey +
-                '}';
-    }
 }

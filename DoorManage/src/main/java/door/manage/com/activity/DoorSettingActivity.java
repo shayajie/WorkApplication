@@ -9,8 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import door.manage.com.R;
+import door.manage.com.app.AppInfo;
 import door.manage.com.utils.MyLog;
+import door.manage.com.utils.StringUtils;
 import test.greendao.bean.Door;
+import test.greendao.bean.UpDateDoorRequest;
 
 /**
  * Created by shayajie on 2016/6/28.
@@ -151,10 +154,11 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
                                 door.setPassword(update_door_password_edittext.getText().toString());
                                 MyLog.d(Tag,door.toString());
                                 mDoorService.update(door);
-//                                UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
-//
-//                                sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
+                                UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
+                                MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
+                                sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
                                 isupdate = true;
+                                Toast.makeText(mContext,resources.getString(R.string.updata_done),Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(mContext,resources.getString(R.string.toast_passwordisnull),Toast.LENGTH_SHORT).show();
                             }

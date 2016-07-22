@@ -17,11 +17,12 @@ import android.widget.TextView;
 import door.manage.com.R;
 import door.manage.com.app.AppInfo;
 import door.manage.com.utils.MyLog;
+import door.manage.com.utils.StringUtils;
 import test.greendao.bean.ControlDoorRequest;
 import test.greendao.bean.Door;
 
 public class DoorControlActivity extends BaseActivity implements OnClickListener {
-	private static final String Tag = "DoorControlActivity";
+	private static final String TAG = "DoorControlActivity";
 	private List<Door> doors;
 	private Door door;
 	private Long doorID;
@@ -39,6 +40,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.door_control_layout);
 		mContext = this;
+		MyLog.d(TAG,"onCreate");
 		doorID = getIntent().getLongExtra("doorId",0L);
 		initdata();
 		initview();
@@ -46,7 +48,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	protected void updateUI() {
-		MyLog.d(Tag,"updateUI");
+		MyLog.d(TAG,"updateUI");
 		door = mDoorService.query(doorID);
 		UIData(door);
 
@@ -122,6 +124,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void initview() {
+		MyLog.d(TAG,"initview");
 		inittitle(true,true);
 
 		title_textview.setText(resources.getString(R.string.doorcontrolactivity_title_text));
@@ -190,6 +193,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void initdata() {
+		MyLog.d(TAG,"initdata");
 		door = mDoorService.query(doorID);
 
 	}
@@ -202,22 +206,25 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 			finish();
 			break;
 		case R.id.title_setting:
+			MyLog.d(TAG,"title_setting");
 			Intent intent = new Intent(mContext, DoorSettingActivity.class);
 			intent.putExtra("doorId", doorID);
 
 			startActivityForResult(intent,0);
 			break;
 		case R.id.open_door_relayout:
+			MyLog.d(TAG,"open_door");
             request  = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_OPEN,door.getPhone());
-			MyLog.d(Tag,"open_door_relayout");
-//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(TAG,StringUtils.controlDoorRequest(request));
+            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
 			break;
 		case R.id.close_door_relayout:
+			MyLog.d(TAG,"close_door");
             request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_CLOSE,door.getPhone());
-			MyLog.d(Tag,"close_door_relayout");
-//            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(TAG,StringUtils.controlDoorRequest(request));
+            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			close_door_prompt_message.setText("正在开启");
 //			Bitmap color = BitmapFactory.decodeResource(getResources(), R.drawable.green_bg);
 //			BitmapDrawable bd= new BitmapDrawable(getResources(), color);
@@ -225,22 +232,25 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 //			setFlickerAnimation(close_door_indicator_lamp_imageview);
 			break;
 		case R.id.stop_relayout:
+			MyLog.d(TAG,"stop");
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_STOP,door.getPhone());
-			MyLog.d(Tag,"stop_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(TAG,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			stop_prompt_message.setText("发送指令中");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 //			close_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 			break;
         case R.id.up_door_relayout:
+			MyLog.d(TAG,"up_door");
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_UP,door.getPhone());
-			MyLog.d(Tag,"up_door_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(TAG,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
         case R.id.down_door_relayout:
+			MyLog.d(TAG,"down_door");
 			request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_DOWN,door.getPhone());
-			MyLog.d(Tag,"down_door_relayout");
-//			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+			MyLog.d(TAG,StringUtils.controlDoorRequest(request));
+			sendMessage(door.getPhone(), StringUtils.controlDoorRequest(request));
                 break;
 		default:
 			break;
