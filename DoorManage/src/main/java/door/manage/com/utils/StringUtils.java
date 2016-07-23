@@ -26,7 +26,7 @@ public class StringUtils {
         stringBuilder.append(getDoorRequest.getOperating());
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(getDoorRequest.getPhone());
-
+        stringBuilder.append(AppInfo.END_TAG);
         return stringBuilder.toString();
     }
 
@@ -42,7 +42,7 @@ public class StringUtils {
         stringBuilder.append(controlDoorRequest.getOperatingstatus());
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(controlDoorRequest.getPhone());
-
+        stringBuilder.append(AppInfo.END_TAG);
         return stringBuilder.toString();
     }
 
@@ -64,7 +64,7 @@ public class StringUtils {
         stringBuilder.append(upDateDoorRequest.getPassword());
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(upDateDoorRequest.getPhone());
-
+        stringBuilder.append(AppInfo.END_TAG);
         return stringBuilder.toString();
     }
 
@@ -81,7 +81,7 @@ public class StringUtils {
         stringBuilder.append(lockDoorRequest.getRemotelock());
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(lockDoorRequest.getPhone());
-
+        stringBuilder.append(AppInfo.END_TAG);
         return stringBuilder.toString();
     }
 

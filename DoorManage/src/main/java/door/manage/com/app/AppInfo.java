@@ -15,9 +15,14 @@ public class AppInfo {
     public static final String SMS_DELIVER_ACTION="android.provider.Telephony.SMS_DELIVER";
     public static final String SMS_RECEIVED = "sms_received";
     /**
-     * LAST_TAG:已‘@’结尾
+     * LAST_TAG:已‘z’结尾
      */
-    public static final String LAST_TAG = "@";
+    public static final String LAST_TAG = "z";
+
+    /**
+     * 已“Z”收尾
+     */
+    public static final String END_TAG = "Z";
     //门读取请求
     public static final String READ_TAG = "0";
     //门写入请求

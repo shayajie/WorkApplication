@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import door.manage.com.app.AppInfo;
 import door.manage.com.utils.DbUtil;
@@ -42,12 +45,15 @@ public class SmsReceiver extends BroadcastReceiver {
 	            if (bundle != null) {
 	                Object[] pdus = (Object[]) bundle.get("pdus");
 	                for (Object pdu : pdus) {
+//						SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu,);
 	                    SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu);
 	                    String sender = message.getOriginatingAddress();
+						String senderfinal = sender.substring(sender.length()-11);
 	                    MyLog.d(TAG,"sender: "+sender);
-
+						MyLog.d(TAG,"senderfinal: "+senderfinal);
 						for (Door door :doors){
-							if (door.getPhone().equals(sender)) {
+							if (door.getPhone().equals(senderfinal)) {
+								MyLog.d(TAG,"messgeappend===="+replaceBlank(message.getMessageBody()));
 								messageContent.append(message.getMessageBody());
 							}
 						}
@@ -56,7 +62,13 @@ public class SmsReceiver extends BroadcastReceiver {
 	                }
 	                if(!messageContent.toString().isEmpty()) {
 	                    MyLog.d(TAG,"send message broadcast.");
-                        String[] strings = messageContent.toString().split(AppInfo.LAST_TAG);
+
+						String strfinal =  replaceBlank(messageContent.toString());
+
+						MyLog.d(TAG,"messageContent====="+strfinal);
+
+
+                        String[] strings = strfinal.split(AppInfo.LAST_TAG);
 						for (String s : strings){
 							MyLog.d(TAG,"strings========="+s);
 						}
@@ -125,6 +137,50 @@ public class SmsReceiver extends BroadcastReceiver {
 	        }
 	    }
 
+//	/**
+//	 * 字符串转换unicode
+//	 */
+//	public static String string2Unicode(String string) {
+//		MyLog.d(TAG,"字符串转换unicode"+string);
+//		StringBuffer unicode = new StringBuffer();
+//
+//		for (int i = 0; i < string.length(); i++) {
+//
+//			// 取出每一个字符
+//			char c = string.charAt(i);
+//
+//			// 转换为unicode
+//			unicode.append("\\u" + Integer.toHexString(c));
+//		}
+//
+//		return unicode.toString();
+//	}
+//	public static String unicode2String(String unicode) {
+//
+//		StringBuffer string = new StringBuffer();
+//
+//		String[] hex = unicode.split("\\\\u");
+//
+//		for (int i = 1; i < hex.length; i++) {
+//
+//			// 转换出每一个代码点
+//			int data = Integer.parseInt(hex[i], 16);
+//
+//			// 追加成string
+//			string.append((char) data);
+//		}
+//
+//		return string.toString();
+//	}
 
-
+	//去空格换行
+		public static String replaceBlank(String str) {
+			String dest = "";
+			if (str!=null) {
+				Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+				Matcher m = p.matcher(str);
+				dest = m.replaceAll("");
+			}
+			return dest;
+		}
 }
