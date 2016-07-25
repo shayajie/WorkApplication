@@ -79,6 +79,7 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_name_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -109,6 +110,7 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_phone_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -141,12 +143,14 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_encoder_pulses_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="7"
                                 android:hint="@string/input_door_encoder_pulses"
                                 android:inputType="number"
+                                android:maxLength="6"
                                 android:textColor="@color/white_first_text_color" />
                         </LinearLayout>
 
@@ -171,11 +175,13 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_pulse_upper_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="7"
                                 android:hint="@string/input_door_pulse_upper_limit"
+                                android:maxLength="6"
                                 android:inputType="number"
                                 android:textColor="@color/white_first_text_color" />
                         </LinearLayout>
@@ -201,10 +207,12 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_pulse_lower_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="7"
+                                android:maxLength="6"
                                 android:hint="@string/input_door_pulse_lower_limit"
                                 android:inputType="number"
                                 android:textColor="@color/white_first_text_color" />
@@ -227,6 +235,7 @@
                                 android:textSize="@dimen/second_text_size" />
 
                             <EditText
+                                android:textColorHint="@color/hint_color"
                                 android:id="@+id/update_door_password_edittext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -236,7 +245,9 @@
                                 android:textColor="@color/white_first_text_color" />
                         </LinearLayout>
 
+
                         <Button
+                            android:background="@drawable/gridview_item_layout_bg"
                             android:id="@+id/update_door_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

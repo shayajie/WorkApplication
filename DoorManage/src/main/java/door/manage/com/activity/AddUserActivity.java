@@ -1,6 +1,7 @@
 package door.manage.com.activity;
 
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,25 +50,29 @@ public class AddUserActivity extends BaseActivity{
                 check();
             }
         });
+        add_user_phone_edittext.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     private void check() {
         if(!add_user_name_edittext.getText().toString().isEmpty()){
             if(!add_user_phone_edittext.getText().toString().isEmpty()){
+                String phone = add_user_phone_edittext.getText().toString().replace(" ","");
+                phone = phone.trim();
+                if(phone.length()==11){
+                    User user = new User();
+                    user.setName(add_user_name_edittext.getText().toString());
+                    user.setPhone(phone);
+                    user.setManagerId(DbUtil.managerId);
 
-                User user = new User();
-                user.setName(add_user_name_edittext.getText().toString());
-                user.setPhone(add_user_phone_edittext.getText().toString());
-                user.setManagerId(DbUtil.managerId);
-
-                boolean issucceed_add = DbUtil.addUser(user);
-                if(issucceed_add){
-                    Toast.makeText(mContext,resources.getString(R.string.add_successed),Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(mContext,resources.getString(R.string.userphone_exist),Toast.LENGTH_SHORT).show();
+                    boolean issucceed_add = DbUtil.addUser(user);
+                    if(issucceed_add){
+                        Toast.makeText(mContext,resources.getString(R.string.add_successed),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(mContext,resources.getString(R.string.userphone_exist),Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(this,resources.getString(R.string.toast_phone_erro),Toast.LENGTH_SHORT).show();
                 }
-
-
             }else {
                 Toast.makeText(mContext,resources.getString(R.string.user_phone_null),Toast.LENGTH_SHORT).show();
             }

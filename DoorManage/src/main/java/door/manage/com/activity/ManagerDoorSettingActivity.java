@@ -203,6 +203,9 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
                                 door.setPassword(update_door_password_edittext.getText().toString());
                                 MyLog.d(Tag,door.toString());
                                 mDoorService.update(door);
+
+
+
                                 UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
 //
                                 MyLog.d(Tag,StringUtils.upDateDoorRequest(request));

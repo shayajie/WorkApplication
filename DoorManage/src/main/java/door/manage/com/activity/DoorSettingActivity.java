@@ -1,6 +1,7 @@
 package door.manage.com.activity;
 
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -142,23 +143,29 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
                         if(!update_door_pulse_lower_edittext.getText().toString().isEmpty()){
 
                             if(!update_door_password_edittext.getText().toString().isEmpty()){
+                                String phone = update_door_phone_edittext.getText().toString().replace(" ","");
+                                phone = phone.trim();
+                                if(phone.length()==11){
+                                    //判断完毕
+                                    Door door = mDoorService.query(doorID);
+                                    //门号码修改？？？
+                                    door.setDoorname(update_door_name_edittext.getText().toString());
+                                    door.setPhone(phone);
+                                    door.setEncoderpulses(update_door_encoder_pulses_edittext.getText().toString());
+                                    door.setUpperpulse(update_door_pulse_upper_edittext.getText().toString());
+                                    door.setLowerpulse(update_door_pulse_lower_edittext.getText().toString());
+                                    door.setPassword(update_door_password_edittext.getText().toString());
+                                    MyLog.d(Tag,door.toString());
+                                    mDoorService.update(door);
+                                    UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
+                                    MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
+                                    sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
+                                    isupdate = true;
+                                    Toast.makeText(mContext,resources.getString(R.string.updata_done),Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(this,resources.getString(R.string.toast_phone_erro),Toast.LENGTH_SHORT).show();
+                                }
 
-                                //判断完毕
-                                Door door = mDoorService.query(doorID);
-                                //门号码修改？？？
-                                door.setDoorname(update_door_name_edittext.getText().toString());
-                                door.setPhone(update_door_phone_edittext.getText().toString());
-                                door.setEncoderpulses(update_door_encoder_pulses_edittext.getText().toString());
-                                door.setUpperpulse(update_door_pulse_upper_edittext.getText().toString());
-                                door.setLowerpulse(update_door_pulse_lower_edittext.getText().toString());
-                                door.setPassword(update_door_password_edittext.getText().toString());
-                                MyLog.d(Tag,door.toString());
-                                mDoorService.update(door);
-                                UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
-                                MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
-                                sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
-                                isupdate = true;
-                                Toast.makeText(mContext,resources.getString(R.string.updata_done),Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(mContext,resources.getString(R.string.toast_passwordisnull),Toast.LENGTH_SHORT).show();
                             }

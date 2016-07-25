@@ -54,4 +54,6 @@
     <color name="button_end_color">#FF646464</color>
     <color name="button_stroke_color">#FF5A5A5A</color>
 
+   <color name="hint_color">#FFC1C1C1</color>
+
 </resources>

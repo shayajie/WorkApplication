@@ -27,7 +27,7 @@ public class DoorApplication extends Application{
         DbCore.init(this);
         MyLog.setEnabled(true);
         MyLog.d("DoorApplication","oncreate");
-        AppInfo.setIsSendMessage(true);
+        AppInfo.setIsSendMessage(false);
     }
 
 }

@@ -81,17 +81,17 @@
     <string name="door_name">门名称:</string>
     <string name="door_id">门序号:</string>
     <string name="door_phone">门号码:</string>
-    <string name="door_encoder_pulses">编码器脉冲数:</string>
-    <string name="door_pulse_upper_limit">上限位脉冲数:</string>
-    <string name="door_pulse_lower_limit">下限位脉冲数:</string>
+    <string name="door_encoder_pulses">设置脉冲数:</string>
+    <string name="door_pulse_upper_limit">上限脉冲数:</string>
+    <string name="door_pulse_lower_limit">下限脉冲数:</string>
     <string name="door_password">门密码:</string>
     <!-- hint -->
     <string name="input_door_name">请输入门名称</string>
     <string name="input_door_id">请输入门序号</string>
     <string name="input_door_phone">请输入门号码</string>
-    <string name="input_door_encoder_pulses">请输入编码器脉冲数</string>
-    <string name="input_door_pulse_upper_limit">请输入上限位脉冲数</string>
-    <string name="input_door_pulse_lower_limit">请输入下限位脉冲数</string>
+    <string name="input_door_encoder_pulses">请输入设置脉冲数</string>
+    <string name="input_door_pulse_upper_limit">请输入上限脉冲数</string>
+    <string name="input_door_pulse_lower_limit">请输入下限脉冲数</string>
     <string name="input_door_password">请输入门密码</string>
     <string name="door_id_digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
 
@@ -136,12 +136,14 @@
     <string name="door_falling_text">已 下 降</string>
 
     <string name="update_ensure">确认修改</string>
-    <string name="toast_nameisnull">门名称为空！</string>
-    <string name="toast_phoneisnull">门号码为空！</string>
-    <string name="toast_encoder_pulsesisnull">门编辑器脉冲数为空！</string>
-    <string name="toast_pulse_upperisnull">门上限位脉冲数为空！</string>
-    <string name="toast_pulse_lowerisnull">门下限位脉冲数为空！</string>
+    <string name="toast_nameisnull">门名称不能为空！</string>
+    <string name="toast_phoneisnull">门号码不能为空！</string>
+    <string name="toast_encoder_pulsesisnull">设置脉冲数不能为空！</string>
+    <string name="toast_pulse_upperisnull">上限脉冲数不能为空！</string>
+    <string name="toast_pulse_lowerisnull">下限脉冲数不能为空！</string>
     <string name="toast_passwordisnull">门密码为空！</string>
+    <string name="toast_phone_erro">输入正确的手机号码！</string>
+
 
     <string name="password_erro">密码错误</string>
     <string name="input_password">请输入密码</string>

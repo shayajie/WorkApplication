@@ -116,7 +116,7 @@ public class DbUtil {
 
 
     private static boolean checkDoorExist(Door door) {
-        List<Door> doors =  getDoorService().query("where doornum=?",door.getDoornum());
+        List<Door> doors =  getDoorService().query("where phone=? and USER_ID=?",new String[]{door.getPhone(),""+door.getUserId()});
         if(doors.size()>=1){
             return true;
         }else{

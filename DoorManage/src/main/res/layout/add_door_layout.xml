@@ -42,6 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
                         android:hint="@string/input_door_name"
+                        android:textColorHint="@color/hint_color"
                         android:inputType="text"
                         android:textColor="@color/white_first_text_color" />
                 </LinearLayout>
@@ -55,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:padding="5dp" >
 
                     <TextView
@@ -79,6 +81,7 @@
                 </LinearLayout>
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/gridview_layout_background_pressedfalse_color" />
@@ -99,13 +102,14 @@
                         android:textSize="@dimen/second_text_size" />
 
                     <EditText
+                        android:textColorHint="@color/hint_color"
                         android:id="@+id/add_door_phone_edittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
                         android:hint="@string/input_door_phone"
                         android:inputType="phone"
-                        android:maxLength="11"
+                        android:maxLength="13"
                         android:textColor="@color/white_first_text_color" />
                 </LinearLayout>
 
@@ -131,12 +135,14 @@
                         android:textSize="@dimen/second_text_size" />
 
                     <EditText
+                        android:textColorHint="@color/hint_color"
                         android:id="@+id/add_door_encoder_pulses_edittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
                         android:hint="@string/input_door_encoder_pulses"
                         android:inputType="number"
+                        android:maxLength="6"
                         android:textColor="@color/white_first_text_color" />
                 </LinearLayout>
 
@@ -161,6 +167,8 @@
                         android:textSize="@dimen/second_text_size" />
 
                     <EditText
+                        android:maxLength="6"
+                        android:textColorHint="@color/hint_color"
                         android:id="@+id/add_door_pulse_upper_edittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -191,6 +199,8 @@
                         android:textSize="@dimen/second_text_size" />
 
                     <EditText
+                        android:maxLength="6"
+                        android:textColorHint="@color/hint_color"
                         android:id="@+id/add_door_pulse_lower_edittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -220,6 +230,7 @@
                         android:textSize="@dimen/second_text_size" />
 
                     <EditText
+                        android:textColorHint="@color/hint_color"
                         android:id="@+id/add_door_password_edittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -234,6 +245,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add"
+                    android:background="@drawable/gridview_item_layout_bg"
                     android:textColor="@color/white_first_text_color"
                     />
                 

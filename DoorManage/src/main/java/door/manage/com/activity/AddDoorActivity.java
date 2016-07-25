@@ -2,6 +2,7 @@ package door.manage.com.activity;
 
 
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,7 +16,8 @@ import test.greendao.bean.Door;
 
 public class AddDoorActivity extends BaseActivity implements OnClickListener {
     private static final String Tag = "DoorControlActivity";
-	private EditText add_door_name_edittext, add_door_id_edittext, add_door_phone_edittext,
+	//add_door_id_edittext,
+	private EditText add_door_name_edittext,  add_door_phone_edittext,
 			add_door_encoder_pulses_edittext, add_door_pulse_upper_edittext, add_door_pulse_lower_edittext,add_door_password_edittext;
 	private Button add_door_button;
 //	private TextView title;
@@ -48,7 +50,7 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 		
 		
 		add_door_name_edittext = (EditText) findViewById(R.id.add_door_name_edittext);
-		add_door_id_edittext = (EditText) findViewById(R.id.add_door_id_edittext);
+//		add_door_id_edittext = (EditText) findViewById(R.id.add_door_id_edittext);
 		add_door_phone_edittext = (EditText) findViewById(R.id.add_door_phone_edittext);
 		add_door_encoder_pulses_edittext = (EditText) findViewById(R.id.add_door_encoder_pulses_edittext);
 		add_door_pulse_upper_edittext = (EditText) findViewById(R.id.add_door_pulse_upper_edittext);
@@ -56,38 +58,15 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 		add_door_password_edittext = (EditText) findViewById(R.id.add_door_password_edittext);
 		add_door_button = (Button) findViewById(R.id.add_door_button);
 		add_door_button.setOnClickListener(this);
+		add_door_phone_edittext.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.add_door_button:
-			String doorid = add_door_id_edittext.getText().toString();
-			String name = add_door_name_edittext.getText().toString();
-			String phone = add_door_phone_edittext.getText().toString();
-			String encoderpulses = add_door_encoder_pulses_edittext.getText().toString();
-			String upperpulse = add_door_pulse_upper_edittext.getText().toString();
-			String lowerpulse = add_door_pulse_lower_edittext.getText().toString();
-			String password = add_door_password_edittext.getText().toString();
-            Door door = new Door();
-            door.setDoorname(name);
-            door.setDoornum(doorid);
-            door.setPhone(phone);
-            door.setEncoderpulses(encoderpulses);
-            door.setUpperpulse(upperpulse);
-            door.setLowerpulse(lowerpulse);
-            door.setPassword(password);
-            door.setUserId(userid);
-			door.setDoorstatus("0");
-            boolean issucceed_add = DbUtil.addDoor(door);
-            if(!isrefush){
-                isrefush = issucceed_add;
-            }
-            if(issucceed_add){
-                Toast.makeText(mContext,resources.getString(R.string.add_successed),Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(mContext,resources.getString(R.string.doornum_exist),Toast.LENGTH_SHORT).show();
-            }
+
+			check();
 
 			break;
 		case R.id.title_back:
@@ -101,6 +80,62 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	private void check() {
+		if(!add_door_name_edittext.getText().toString().isEmpty()){
+			if(!add_door_phone_edittext.getText().toString().isEmpty()){
+				if(!add_door_encoder_pulses_edittext.getText().toString().isEmpty()){
+					if(!add_door_pulse_upper_edittext.getText().toString().isEmpty()){
+						if(!add_door_pulse_lower_edittext.getText().toString().isEmpty()){
+							if(!add_door_password_edittext.getText().toString().isEmpty()){
+								String phone = add_door_phone_edittext.getText().toString().replace(" ","");
+								phone = phone.trim();
+								if(phone.length()==11){
+									Door door = new Door();
+									door.setDoorname(add_door_name_edittext.getText().toString());
+//           					 door.setDoornum(doorid);
+									MyLog.d(Tag,add_door_phone_edittext.getText().toString());
+
+									door.setPhone(phone);
+									MyLog.d(Tag,phone);
+									door.setEncoderpulses(add_door_encoder_pulses_edittext.getText().toString());
+									door.setUpperpulse(add_door_pulse_upper_edittext.getText().toString());
+									door.setLowerpulse(add_door_pulse_lower_edittext.getText().toString());
+									door.setPassword(add_door_password_edittext.getText().toString());
+									door.setUserId(userid);
+									door.setDoorstatus("0");
+									boolean issucceed_add = DbUtil.addDoor(door);
+									if(!isrefush){
+										isrefush = issucceed_add;
+									}
+									if(issucceed_add){
+										Toast.makeText(mContext,resources.getString(R.string.add_successed),Toast.LENGTH_SHORT).show();
+									}else{
+										Toast.makeText(mContext,resources.getString(R.string.doornum_exist),Toast.LENGTH_SHORT).show();
+									}
+								}else {
+									Toast.makeText(this,resources.getString(R.string.toast_phone_erro),Toast.LENGTH_SHORT).show();
+								}
+							}else {
+								Toast.makeText(this,resources.getString(R.string.toast_passwordisnull),Toast.LENGTH_SHORT).show();
+							}
+						}else {
+							Toast.makeText(this,resources.getString(R.string.toast_pulse_lowerisnull),Toast.LENGTH_SHORT).show();
+						}
+					}else {
+						Toast.makeText(this,resources.getString(R.string.toast_pulse_upperisnull),Toast.LENGTH_SHORT).show();
+					}
+				}else {
+					Toast.makeText(this,resources.getString(R.string.toast_encoder_pulsesisnull),Toast.LENGTH_SHORT).show();
+				}
+			}else {
+				Toast.makeText(this,resources.getString(R.string.toast_phoneisnull),Toast.LENGTH_SHORT).show();
+			}
+		}else{
+			Toast.makeText(this,resources.getString(R.string.toast_nameisnull),Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
 }
