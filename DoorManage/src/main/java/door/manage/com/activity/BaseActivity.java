@@ -10,10 +10,14 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.telephony.SmsManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import door.manage.com.R;
 import door.manage.com.app.AppInfo;
@@ -220,4 +224,5 @@ public abstract class BaseActivity extends Activity {
         super.onDestroy();
 
     }
+
 }
