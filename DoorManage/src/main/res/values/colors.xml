@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color> -->
 
-    <color name="colorPrimary">#FF454545</color>
+    <color name="colorPrimary">#454545</color>
     <color name="colorPrimaryDark">#FF454545</color>
     <color name="colorAccent">#ecf0f1</color>
 
@@ -31,7 +31,7 @@
     <color name="rise_door_layout_background_pressedtrue_color">#7Fff7500</color>
     <!-- 下降布局背景 -->
     <color name="decline_door_layout_background_pressedfalse_color">#FFd6ecf0</color>
-    <color name="decline_door_layout_background_pressedtrue_color">#7Fd6ecf0</color>
+    <color name="decline_door_layout_background_pressedtrue_color">#7fd6ecf0</color>
     <!-- 停止布局背景 -->
     <color name="stop_layout_background_pressedfalse_color">#FFff7500</color>
     <color name="stop_layout_background_pressedtrue_color">#7Fff7500</color>
@@ -46,14 +46,16 @@
     <!-- 背景色 -->
     <color name="background_color">#FF454545</color>
 
-    <color name="gridview_layout_background_pressedfalse_color">#7FC1C1C1</color>
+    <color name="gridview_layout_background_pressedfalse_color">#7fc1c1c1</color>
     <color name="gridview_layout_background_pressedtrue_color">#FFC1C1C1</color>
     <color name="button_center_color">#FF8d8d8d</color>
 
-    <color name="button_start_color">#FFC4C4C4</color>
+    <color name="button_start_color">#c4c4c4</color>
     <color name="button_end_color">#FF646464</color>
     <color name="button_stroke_color">#FF5A5A5A</color>
 
-   <color name="hint_color">#FFC1C1C1</color>
+   <color name="hint_color">#c1c1c1</color>
 
+   <color name="dialog_button_color">#009688</color>
+   <color name="dialog_button_false_color">#aaaaaa</color>
 </resources>

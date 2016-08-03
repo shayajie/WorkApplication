@@ -3,7 +3,7 @@ package test.greendao.bean;
 /**
  * Created by shayajie on 2016/6/22.
  */
-public class ControlDoorResponse {
+public class ControlDoorResponse extends BaseBean{
     private String protocol_object;
     private String doornum;
     private String operatingstatus;
@@ -86,5 +86,10 @@ public class ControlDoorResponse {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String getMessage() {
+        return null;
     }
 }

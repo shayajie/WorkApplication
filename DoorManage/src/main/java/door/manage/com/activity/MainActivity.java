@@ -3,6 +3,7 @@ package door.manage.com.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void updateUI() {
+        MyLog.d(TAG,"updateUI");
         doors = mDoorService.query("where USER_ID=?", "" + users.get(0).getUserId());
         mGridView_adapter = new GridView_Adapter(doors, mContext);
         mGridView.setAdapter(mGridView_adapter);
@@ -102,10 +104,9 @@ public class MainActivity extends BaseActivity {
                 } else {
 
                     Door door = doors.get(position);
-                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
-                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
-
-                    promoteDialog(door.getPhone(),StringUtils.getDoorMessage(getDoorRequest));
+                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getPhone());
+                    MyLog.d(TAG,getDoorRequest.getMessage());
+//                    promoteDialog(door.getPhone(),getDoorRequest.getMessage());
 
                     MyLog.d(TAG,"controldoor");
 
@@ -113,9 +114,11 @@ public class MainActivity extends BaseActivity {
 //                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
 //                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
 //                    sendMessage(door.getPhone(), message);
-//                    Intent intent = new Intent(mContext, DoorControlActivity.class);
-//                    intent.putExtra("doorId", doors.get(position).getDoorId());
-//                    startActivity(intent);
+                    Intent intent = new Intent(mContext, DoorControlActivity.class);
+                    intent.putExtra("doorId", doors.get(position).getDoorId());
+                    intent.putExtra("message",getDoorRequest.getMessage());
+                    intent.putExtra("isShowDialog",true);
+                    startActivity(intent);
                 }
 
             }
@@ -143,62 +146,14 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-    private void promoteDialog(final String sender, final String message) {
-        Dialog dialog = new Dialog(MainActivity.this);
-        dialog.setTitle("这是测试标题");
-//        dialog.setView();
-//        dialog.setMessage("我是一条测试文本");
-        dialog.setView(R.layout.dialog_layout);
 
-        final TextView text = (TextView) dialog.getView().findViewById(R.id.text);
-        text.setText("是否发送消息获取门信息!");
-        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this,"发送中"+ which,Toast.LENGTH_SHORT).show();
-                Field field = null;
-                try {
-                    field = dialog.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
-                    field.setAccessible(true);
-                    field.set(dialog, false);
 
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        dialog.setPositiveButton("发送", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this,"发送中"+ which,Toast.LENGTH_SHORT).show();
-                Field field = null;
-                try {
-                    field = dialog.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
-                    field.setAccessible(true);
-                    field.set(dialog, false);
-                    text.setText("已发送,正在获取门信息...");
-                    Toast.makeText(MainActivity.this,"发送中",Toast.LENGTH_SHORT).show();
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-//                sendMessage(sender,message);
-            }
-        });
-        dialog.setNeutralButton("测试", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Toast.makeText(MainActivity.this,"wcesghugh"+which,Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        dialog.create();
-        dialog.show();
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        if(alertDialog.isShowing()){
+//            alertDialog.dismiss();
+//        }
     }
 
     @Override

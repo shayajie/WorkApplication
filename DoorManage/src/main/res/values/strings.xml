@@ -105,7 +105,7 @@
     <string name="input_user_phone">请输入手机号</string>
 
     <string name="add_successed">添加成功</string>
-    <string name="doornum_exist">已存在该编号的门请勿重复添加</string>
+    <string name="doorphone_exist">已存在该手机号的门请勿重复添加</string>
 
 
     <string name="mainactivity_title_text">门管理</string>
@@ -152,4 +152,10 @@
 
     <string name="updata_done">修改完毕</string>
     <string name="delete_done">删除完毕</string>
+
+    <string name="dialog_positive_send">发送</string>
+    <string name="dialog_positive_send_again">重新发送</string>
+    <string name="dialog_text_send_promote">是否发送消息获取门信息!</string>
+    <string name="dialog_text_sended">已发送!等待获取门信息…</string>
+    <string name="dialog_title_promote">提示</string>
 </resources>

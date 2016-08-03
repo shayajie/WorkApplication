@@ -64,7 +64,7 @@ public class UserDoorActivity extends BaseActivity{
                 } else {
 
                     Door door = doors.get(position);
-                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getDoornum(), AppInfo.READ_TAG,door.getPhone());
+                    GetDoorRequest getDoorRequest = new GetDoorRequest(door.getPhone());
                     MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
                     sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
 //                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();

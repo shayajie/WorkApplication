@@ -21,7 +21,7 @@ import test.greendao.bean.Door;
 import test.greendao.bean.GetDoorResponse;
 import test.greendao.bean.UpDateDoorResponse;
 
-public class SmsReceiver extends BroadcastReceiver {
+public class SSSmsReceiver extends BroadcastReceiver {
 	 	private static final String TAG = "SmsReceiver";
 	    private String sender = "";
 		private DoorService mDoorService;
@@ -84,7 +84,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                     door.setEncoderpulses(doorResponse.getEncoderpulses());
                                     door.setUpperpulse(doorResponse.getUpperpulse());
                                     door.setLowerpulse(doorResponse.getLowerpulse());
-                                    door.setDoorstatus(doorResponse.getOperatingstatus());
+                                    door.setDoorstatus(doorResponse.getOperating());
                                     mDoorService.update(door);
                                 }
 

@@ -3,20 +3,17 @@ package test.greendao.bean;
 /**
  * Created by shayajie on 2016/6/20.
  */
-public class GetDoorResponse {
-    private String protocol_object;
-    private String doornum;
-    private String operatingstatus;
+public class GetDoorResponse extends BaseBean{
     private String operating;
     private String encoderpulses;
     private String upperpulse;
     private String lowerpulse;
-    private String phone;
 
-    public GetDoorResponse(String protocol_object, String doornum, String operatingstatus, String operating, String encoderpulses, String upperpulse, String lowerpulse, String phone) {
+
+
+    public GetDoorResponse(String protocol_object, String isoperating, String operating, String encoderpulses, String upperpulse, String lowerpulse, String phone) {
         this.protocol_object = protocol_object;
-        this.doornum = doornum;
-        this.operatingstatus = operatingstatus;
+        this.isoperating = isoperating;
         this.operating = operating;
         this.encoderpulses = encoderpulses;
         this.upperpulse = upperpulse;
@@ -24,29 +21,19 @@ public class GetDoorResponse {
         this.phone = phone;
     }
 
-    public String getProtocol_object() {
-        return protocol_object;
-    }
 
-    public void setProtocol_object(String protocol_object) {
+    public GetDoorResponse(String protocol_object, String doornum, String isoperating, String operating, String encoderpulses, String upperpulse, String lowerpulse, String phone) {
         this.protocol_object = protocol_object;
-    }
-
-    public String getDoornum() {
-        return doornum;
-    }
-
-    public void setDoornum(String doornum) {
         this.doornum = doornum;
+        this.isoperating = isoperating;
+        this.operating = operating;
+        this.encoderpulses = encoderpulses;
+        this.upperpulse = upperpulse;
+        this.lowerpulse = lowerpulse;
+        this.phone = phone;
     }
 
-    public String getOperatingstatus() {
-        return operatingstatus;
-    }
 
-    public void setOperatingstatus(String operatingstatus) {
-        this.operatingstatus = operatingstatus;
-    }
 
     public String getOperating() {
         return operating;
@@ -80,11 +67,8 @@ public class GetDoorResponse {
         this.lowerpulse = lowerpulse;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @Override
+    public String getMessage() {
+        return null;
     }
 }

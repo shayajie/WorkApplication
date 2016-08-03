@@ -1,12 +1,15 @@
 package door.manage.com.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import door.manage.com.R;
+import door.manage.com.service.SmsService;
 import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
 
@@ -24,6 +27,12 @@ public class StartActivity extends BaseActivity{
         setContentView(startView);
         shared = getSharedPreferences("appinfo", 0);
         editor = shared.edit();
+        Intent intent  = new Intent(this,SmsService.class);
+        startService(intent);
+        TelephonyManager telephonyManager = (TelephonyManager) this
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        String NativePhoneNumber= telephonyManager.getLine1Number();
+        MyLog.d(TAG,NativePhoneNumber);
         firstRun();
         AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
         aa.setDuration(2000);
@@ -37,7 +46,8 @@ public class StartActivity extends BaseActivity{
             @Override
             public void onAnimationEnd(Animation animation) {
                 MyLog.d(TAG,"onAnimationEnd");
-                redirectto();
+//                redirectto();
+                reddebug();
             }
 
             @Override
@@ -57,7 +67,10 @@ public class StartActivity extends BaseActivity{
         if (isFirstRun) {
 //            long a = mDbManager.add_admin();
             MyLog.d(TAG,"==============firstrun_start");
-            DbUtil.firstaddUser();
+
+
+
+            DbUtil.firstaddUser("");
             editor.putBoolean("isFirstRun", false);
             editor.commit();
             MyLog.d(TAG,"==============firstrun_end");
@@ -70,4 +83,12 @@ public class StartActivity extends BaseActivity{
         startActivity(intent);
         finish();
     }
+
+    private void reddebug(){
+        MyLog.d(TAG,"reddebug");
+        Intent intent = new Intent(this,FileControlActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

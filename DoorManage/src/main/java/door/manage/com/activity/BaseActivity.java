@@ -1,6 +1,7 @@
 package door.manage.com.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,11 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import door.manage.com.R;
 import door.manage.com.app.AppInfo;
 import door.manage.com.service.DoorService;
 import door.manage.com.service.ManagerService;
-import door.manage.com.service.SmsReceiver;
+import door.manage.com.service.SmsService;
 import door.manage.com.service.UserService;
 import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
@@ -33,6 +36,7 @@ import door.manage.com.utils.MyLog;
  */
 public abstract class BaseActivity extends Activity {
     private static final String TAG = "BaseActivity";
+    private  final String simpleName   = getClass().getSimpleName();
     //    protected RelativeLayout title_back,title_setting;
 //    protected TextView title_text;
     protected Resources resources;
@@ -54,7 +58,9 @@ public abstract class BaseActivity extends Activity {
     private SmsStatusReceiver mSmsStatusReceiver;
     private SmsDeliveryStatusReceiver mSmsDeliveryStatusReceiver;
     private MSmsReceiver mSmsReceiver;
-    private SmsReceiver smsReceiver;
+//    private SmsService.SmsReceiver smsReceiver;
+
+    protected String getmessage;
 
 
     @Override
@@ -171,24 +177,43 @@ public abstract class BaseActivity extends Activity {
         }
     }
 
+
     public class MSmsReceiver extends BroadcastReceiver {
         public static final String SMS_RECEIVED_ACTION = "sms_received";
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            MyLog.d(TAG, "action: " + action);
-            if (SMS_RECEIVED_ACTION.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                updateUI();
-                String messageContent = bundle.getString("message");
-                MyLog.d(TAG, messageContent);
+            if (null != getTopActivity()){
+                MyLog.d(TAG,"topactivity===="+getTopActivity());
+                MyLog.d(TAG,"getSimpleName===="+simpleName);
+                if(getTopActivity().endsWith(simpleName)){
+                    String action = intent.getAction();
+                    MyLog.d(TAG, "action: " + action);
+                    if (SMS_RECEIVED_ACTION.equals(action)) {
+                        Bundle bundle = intent.getExtras();
+                        getmessage = bundle.getString("message");
+                        MyLog.d(TAG, getmessage);
+                        updateUI();
 
+
+                    }
+                }
             }
+
 //            abortBroadcast();
         }
     }
+    private String getTopActivity()
+    {
+        ActivityManager manager = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> runningTaskInfos = manager.getRunningTasks(1);
 
+        if(runningTaskInfos != null)
+
+            return runningTaskInfos.get(0).topActivity.getClassName();
+        else
+            return null ;
+    }
     @Override
     protected void onStart() {
         super.onStart();

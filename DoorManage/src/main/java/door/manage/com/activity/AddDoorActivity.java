@@ -112,7 +112,7 @@ public class AddDoorActivity extends BaseActivity implements OnClickListener {
 									if(issucceed_add){
 										Toast.makeText(mContext,resources.getString(R.string.add_successed),Toast.LENGTH_SHORT).show();
 									}else{
-										Toast.makeText(mContext,resources.getString(R.string.doornum_exist),Toast.LENGTH_SHORT).show();
+										Toast.makeText(mContext,resources.getString(R.string.doorphone_exist),Toast.LENGTH_SHORT).show();
 									}
 								}else {
 									Toast.makeText(this,resources.getString(R.string.toast_phone_erro),Toast.LENGTH_SHORT).show();

@@ -22,7 +22,7 @@ public class AppInfo {
     /**
      * 已“Z”收尾
      */
-    public static final String END_TAG = "Z";
+    public static final String END_TAG = "ZZ";
     //门读取请求
     public static final String READ_TAG = "0";
     //门写入请求

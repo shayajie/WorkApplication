@@ -1,5 +1,6 @@
 package door.manage.com.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
@@ -25,6 +26,8 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
     private boolean isupdate = false;
     private Long doorID;
     private Door door;
+    private boolean isShowDialog = false;
+
 
     private LinearLayout verification_layout, door_setting_layout;
     private TextView password_prompt_text;
@@ -80,7 +83,6 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
         }else {
             verification_layout.setVisibility(View.VISIBLE);
             door_setting_layout.setVisibility(View.GONE);
-
         }
     }
 
@@ -120,11 +122,14 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.title_back:
+                Intent intent=new Intent();
+                intent.putExtra("isShowDialog",false);
                 if(isupdate){
-                    setResult(1);
+                    setResult(1,intent);
                 }else {
-                    setResult(0);
+                    setResult(0,intent);
                 }
+
                 finish();
                 break;
             default:
@@ -157,11 +162,15 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
                                     door.setPassword(update_door_password_edittext.getText().toString());
                                     MyLog.d(Tag,door.toString());
                                     mDoorService.update(door);
-                                    UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
-                                    MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
-                                    sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
+
+                                   if (checkDoorInfoChange(door)){
+                                       UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
+                                       MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
+                                       sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
+                                   }
                                     isupdate = true;
                                     Toast.makeText(mContext,resources.getString(R.string.updata_done),Toast.LENGTH_SHORT).show();
+
                                 }else {
                                     Toast.makeText(this,resources.getString(R.string.toast_phone_erro),Toast.LENGTH_SHORT).show();
                                 }
@@ -190,6 +199,15 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
 
         }else {
             Toast.makeText(mContext,resources.getString(R.string.toast_nameisnull),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean checkDoorInfoChange(Door newdoor) {
+
+        if (door.getPhone().equals(newdoor.getPhone())&&door.getEncoderpulses().equals(newdoor.getEncoderpulses())&&door.getUpperpulse().equals(newdoor.getUpperpulse())&&door.getLowerpulse().equals(newdoor.getLowerpulse())){
+            return false;
+        }else {
+            return true;
         }
     }
 

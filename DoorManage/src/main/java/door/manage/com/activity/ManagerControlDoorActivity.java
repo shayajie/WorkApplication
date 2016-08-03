@@ -210,14 +210,14 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
                 startActivityForResult(intent,0);
                 break;
             case R.id.open_door_relayout:
-                request  = new ControlDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,AppInfo.OPERATING_OPEN,door.getPhone());
+                request  = new ControlDoorRequest(AppInfo.OPERATING_OPEN,door.getPhone());
                 MyLog.d(Tag,StringUtils.controlDoorRequest(request));
             sendMessage(door.getPhone(), StringUtils.controlDoorRequest(request));
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
                 break;
             case R.id.close_door_relayout:
-                request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_CLOSE,door.getPhone());
+                request = new ControlDoorRequest(AppInfo.OPERATING_CLOSE,door.getPhone());
                 MyLog.d(Tag,StringUtils.controlDoorRequest(request));
             sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			close_door_prompt_message.setText("正在开启");
@@ -227,7 +227,7 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
 //			setFlickerAnimation(close_door_indicator_lamp_imageview);
                 break;
             case R.id.stop_relayout:
-                request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_STOP,door.getPhone());
+                request = new ControlDoorRequest(AppInfo.OPERATING_STOP,door.getPhone());
                 MyLog.d(Tag,StringUtils.controlDoorRequest(request));
 			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
 //			stop_prompt_message.setText("发送指令中");
@@ -235,12 +235,12 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
 //			close_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
                 break;
             case R.id.up_door_relayout:
-                request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_UP,door.getPhone());
+                request = new ControlDoorRequest(AppInfo.OPERATING_UP,door.getPhone());
                 MyLog.d(Tag,StringUtils.controlDoorRequest(request));
 			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
             case R.id.down_door_relayout:
-                request = new ControlDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,AppInfo.OPERATING_DOWN,door.getPhone());
+                request = new ControlDoorRequest(AppInfo.OPERATING_DOWN,door.getPhone());
                 MyLog.d(Tag,StringUtils.controlDoorRequest(request));
 			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
                 break;
