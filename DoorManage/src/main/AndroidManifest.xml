@@ -10,29 +10,28 @@
     <!-- 接收消息 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-
-
     <!-- SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 向SDCard写入数据权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--获取手机号-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".app.DoorApplication"
         android:allowBackup="true"
+        android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"
-        android:enabled="true"
         android:theme="@style/MyAppTheme">
         <activity
             android:name=".activity.StartActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,64 +41,66 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddDoorActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.DoorControlActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DoorSettingActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".activity.ManagerUsersActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.AddUserActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".activity.UserDoorActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ManagerControlDoorActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ManagerDoorSettingActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
             android:name=".activity.FileControlActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!--<receiver-->
-            <!--android:name=".service.SmsReceiver"-->
-            <!--android:permission="android.permission.BROADCAST_SMS" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.provider.Telephony.SMS_DELIVER" />-->
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-            <!--</intent-filter>-->
+        <!--android:name=".service.SmsReceiver"-->
+        <!--android:permission="android.permission.BROADCAST_SMS" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.provider.Telephony.SMS_DELIVER" />-->
+        <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
         <service
-            android:enabled="true"
             android:name=".service.SmsService"
-            android:process=":my_sms"
-            >
+            android:enabled="true"
+            android:process=":my_sms">
 
         </service>
+        <service android:name=".service.DataService"/>
+
+
         <receiver
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:name=".service.MyRestartReceiver">
+            android:name=".service.MyRestartReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="com.door.sms.restart"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.door.sms.restart" />
             </intent-filter>
         </receiver>
     </application>
