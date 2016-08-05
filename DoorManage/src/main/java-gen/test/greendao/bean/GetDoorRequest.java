@@ -3,22 +3,13 @@ package test.greendao.bean;
 import door.manage.com.app.AppInfo;
 
 /**
- * Created by shayajie on 2016/7/1.
+ * Created by shayajie on 2016/6/20.
+ * 获取门信息的请求
  */
-public class LockDoorRequest extends BaseRequest{
-    private String remotelock;
+public class GetDoorRequest extends BaseRequest {
 
-    public LockDoorRequest(String phone, String remotelock) {
-        super(AppInfo.D_TAG, AppInfo.WRITE_TAG, phone, "");
-        this.remotelock = remotelock;
-    }
-
-    public String getRemotelock() {
-        return remotelock;
-    }
-
-    public void setRemotelock(String remotelock) {
-        this.remotelock = remotelock;
+    public GetDoorRequest(String phone) {
+        super(AppInfo.A_TAG,AppInfo.READ_TAG,phone,"");
     }
 
     @Override
@@ -28,12 +19,12 @@ public class LockDoorRequest extends BaseRequest{
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(getIsoperating());
         stringBuilder.append(AppInfo.LAST_TAG);
-        stringBuilder.append(getRemotelock());
-        stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(MyUser.getInstance().getUserPhone());
 //        stringBuilder.append(getPhone());
+
         stringBuilder.append(AppInfo.LAST_TAG);
         stringBuilder.append(AppInfo.END_TAG);
         return stringBuilder.toString();
     }
+
 }

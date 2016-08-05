@@ -163,4 +163,15 @@ public class User {
         myDao.refresh(this);
     }
 
+    @Override
+    public String toString() {
+
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", managerId=" + managerId +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

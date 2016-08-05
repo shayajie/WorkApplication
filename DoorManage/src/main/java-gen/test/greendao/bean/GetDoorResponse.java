@@ -3,72 +3,23 @@ package test.greendao.bean;
 /**
  * Created by shayajie on 2016/6/20.
  */
-public class GetDoorResponse extends BaseBean{
-    private String operating;
-    private String encoderpulses;
-    private String upperpulse;
-    private String lowerpulse;
+public class GetDoorResponse extends BaseResponse {
 
-
-
-    public GetDoorResponse(String protocol_object, String isoperating, String operating, String encoderpulses, String upperpulse, String lowerpulse, String phone) {
-        this.protocol_object = protocol_object;
-        this.isoperating = isoperating;
-        this.operating = operating;
-        this.encoderpulses = encoderpulses;
-        this.upperpulse = upperpulse;
-        this.lowerpulse = lowerpulse;
-        this.phone = phone;
-    }
-
-
-    public GetDoorResponse(String protocol_object, String doornum, String isoperating, String operating, String encoderpulses, String upperpulse, String lowerpulse, String phone) {
-        this.protocol_object = protocol_object;
-        this.doornum = doornum;
-        this.isoperating = isoperating;
-        this.operating = operating;
-        this.encoderpulses = encoderpulses;
-        this.upperpulse = upperpulse;
-        this.lowerpulse = lowerpulse;
-        this.phone = phone;
-    }
-
-
-
-    public String getOperating() {
-        return operating;
-    }
-
-    public void setOperating(String operating) {
-        this.operating = operating;
-    }
-
-    public String getEncoderpulses() {
-        return encoderpulses;
-    }
-
-    public void setEncoderpulses(String encoderpulses) {
-        this.encoderpulses = encoderpulses;
-    }
-
-    public String getUpperpulse() {
-        return upperpulse;
-    }
-
-    public void setUpperpulse(String upperpulse) {
-        this.upperpulse = upperpulse;
-    }
-
-    public String getLowerpulse() {
-        return lowerpulse;
-    }
-
-    public void setLowerpulse(String lowerpulse) {
-        this.lowerpulse = lowerpulse;
+    public  GetDoorResponse(String[] strings){
+        super(strings[0],"",strings[1],strings[2],strings[3],strings[4],strings[5],strings[6]);
     }
 
     @Override
-    public String getMessage() {
-        return null;
+    public String toString() {
+        return "GetDoorResponse{"+
+                "protocol_object='" + protocol_object + '\'' +
+                ", doornum='" + doornum + '\'' +
+                ", isoperating='" + isoperating + '\'' +
+                ", operating='" + operating + '\'' +
+                ", encoderpulses='" + encoderpulses + '\'' +
+                ", upperpulse='" + upperpulse + '\'' +
+                ", lowerpulse='" + lowerpulse + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

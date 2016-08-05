@@ -6,50 +6,28 @@ import door.manage.com.app.AppInfo;
  * Created by shayajie on 2016/6/28.
  * 修改门信息的请求
  */
-public class UpDateDoorRequest {
-    private String protocol_object;     //代表操作类型如A、B、C
-    private String doornum;             //代表门编号
-    private String operating;           //代表门的操作1。是操作0是不操作
+public class UpDateDoorRequest extends BaseRequest {
     private String encoderpulses;
     private String upperpulse;
     private String lowerpulse;
-    private String password;
-    private String phone;
 
-    public UpDateDoorRequest(String doornum, String operating, String encoderpulses, String upperpulse, String lowerpulse, String password, String phone) {
-        this.protocol_object = AppInfo.C_TAG;
-        this.doornum = doornum;
-        this.operating = operating;
+    public UpDateDoorRequest( String phone,String encoderpulses, String upperpulse, String lowerpulse) {
+        super(AppInfo.C_TAG, AppInfo.WRITE_TAG, phone, "");
         this.encoderpulses = encoderpulses;
         this.upperpulse = upperpulse;
         this.lowerpulse = lowerpulse;
-        this.password = password;
-        this.phone = phone;
     }
+    //    public UpDateDoorRequest(String doornum, String operating, String encoderpulses, String upperpulse, String lowerpulse, String password, String phone) {
+//        this.protocol_object = AppInfo.C_TAG;
+//        this.doornum = doornum;
+//        this.encoderpulses = encoderpulses;
+//        this.upperpulse = upperpulse;
+//        this.lowerpulse = lowerpulse;
+//        this.password = password;
+//        this.phone = phone;
+//    }
+//
 
-    public String getProtocol_object() {
-        return protocol_object;
-    }
-
-    public void setProtocol_object(String protocol_object) {
-        this.protocol_object = protocol_object;
-    }
-
-    public String getDoornum() {
-        return doornum;
-    }
-
-    public void setDoornum(String doornum) {
-        this.doornum = doornum;
-    }
-
-    public String getOperating() {
-        return operating;
-    }
-
-    public void setOperating(String operating) {
-        this.operating = operating;
-    }
 
     public String getEncoderpulses() {
         return encoderpulses;
@@ -75,33 +53,28 @@ public class UpDateDoorRequest {
         this.lowerpulse = lowerpulse;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     @Override
-    public String toString() {
-        return "UpDateDoorRequest{" +
-                "protocol_object='" + protocol_object + '\'' +
-                ", doornum='" + doornum + '\'' +
-                ", operating='" + operating + '\'' +
-                ", encoderpulses='" + encoderpulses + '\'' +
-                ", upperpulse='" + upperpulse + '\'' +
-                ", lowerpulse='" + lowerpulse + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public String getMessage() {
+        StringBuilder stringBuilder=  new StringBuilder();
+        stringBuilder.append(getProtocol_object());
+        stringBuilder.append(AppInfo.LAST_TAG);
+//        stringBuilder.append(upDateDoorRequest.getDoornum());
+//        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(getIsoperating());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(getEncoderpulses());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(getUpperpulse());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(getLowerpulse());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(MyUser.getInstance().getUserPhone());
+//        stringBuilder.append(getPhone());
+        stringBuilder.append(AppInfo.LAST_TAG);
+        stringBuilder.append(AppInfo.END_TAG);
+        return stringBuilder.toString();
     }
+
 }
