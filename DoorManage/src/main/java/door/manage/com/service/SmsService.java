@@ -84,12 +84,15 @@ public class SmsService extends Service {
 
                     }
                     if (!messageContent.toString().isEmpty()) {
+                        Intent serviceIntent = new Intent(context,DataService.class);
+                        serviceIntent.putExtra("message",replaceBlank(messageContent.toString()));
+                        startService(serviceIntent);
 
-                        Intent intentBroadcast = new Intent();
-                        intentBroadcast.putExtra("message", replaceBlank(messageContent.toString()));
-                        intentBroadcast.setAction(AppInfo.SMS_RECEIVED);
-                        context.sendBroadcast(intentBroadcast);
-                        MyLog.d(TAG, "send broadcast and abort");
+//                        Intent intentBroadcast = new Intent();
+//                        intentBroadcast.putExtra("message", replaceBlank(messageContent.toString()));
+//                        intentBroadcast.setAction(AppInfo.SMS_RECEIVED);
+//                        context.sendBroadcast(intentBroadcast);
+//                        MyLog.d(TAG, "send broadcast and abort");
 //	                    abortBroadcast();
                     }
                 }

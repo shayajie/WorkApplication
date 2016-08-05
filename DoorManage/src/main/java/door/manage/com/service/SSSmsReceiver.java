@@ -73,59 +73,59 @@ public class SSSmsReceiver extends BroadcastReceiver {
 							MyLog.d(TAG,"strings========="+s);
 						}
 						List<Door> doors;
-						switch (strings[0]){
-                            case AppInfo.A_TAG:
-								MyLog.d(TAG,"AppInfo.A_TAG");
-                                GetDoorResponse doorResponse = StringUtils.getDoorResponse(strings);
-								doors = mDoorService.query("where doornum=?",doorResponse.getDoornum());
-                                if(doors.size()==1){
-                                    Door door = doors.get(0);
-                                    door.setPhone(doorResponse.getPhone());
-                                    door.setEncoderpulses(doorResponse.getEncoderpulses());
-                                    door.setUpperpulse(doorResponse.getUpperpulse());
-                                    door.setLowerpulse(doorResponse.getLowerpulse());
-                                    door.setDoorstatus(doorResponse.getOperating());
-                                    mDoorService.update(door);
-                                }
-
-                                break;
-                            case AppInfo.B_TAG:
-								MyLog.d(TAG,"AppInfo.B_TAG");
-								ControlDoorResponse controlDoorResponse = StringUtils.controlDoorResponse(strings);
-								doors = mDoorService.query("where doornum=?",controlDoorResponse.getDoornum());
-								if(doors.size()==1){
-									Door door = doors.get(0);
-									door.setPhone(controlDoorResponse.getPhone());
-									door.setEncoderpulses(controlDoorResponse.getEncoderpulses());
-									door.setUpperpulse(controlDoorResponse.getUpperpulse());
-									door.setLowerpulse(controlDoorResponse.getLowerpulse());
-									door.setDoorstatus(controlDoorResponse.getOperatingstatus());
-									mDoorService.update(door);
-								}
-                                break;
-                            case AppInfo.C_TAG:
-								MyLog.d(TAG,"AppInfo.C_TAG");
-								UpDateDoorResponse upDateDoorResponse = StringUtils.upDateDoorResponse(strings);
-								doors = mDoorService.query("where doornum=?",upDateDoorResponse.getDoornum());
-								if(doors.size()==1){
-									Door door = doors.get(0);
-									door.setPhone(upDateDoorResponse.getPhone());
-									door.setEncoderpulses(upDateDoorResponse.getEncoderpulses());
-									door.setUpperpulse(upDateDoorResponse.getUpperpulse());
-									door.setLowerpulse(upDateDoorResponse.getLowerpulse());
-									door.setDoorstatus(upDateDoorResponse.getOperatingstatus());
-									mDoorService.update(door);
-								}
-                                break;
-                            case AppInfo.D_TAG:
-
-                                break;
-                            case AppInfo.F_TAG:
-
-                                break;
-                            default:
-                                break;
-                        }
+//						switch (strings[0]){
+//                            case AppInfo.A_TAG:
+//								MyLog.d(TAG,"AppInfo.A_TAG");
+//                                GetDoorResponse doorResponse = StringUtils.getDoorResponse(strings);
+//								doors = mDoorService.query("where doornum=?",doorResponse.getDoornum());
+//                                if(doors.size()==1){
+//                                    Door door = doors.get(0);
+//                                    door.setPhone(doorResponse.getPhone());
+//                                    door.setEncoderpulses(doorResponse.getEncoderpulses());
+//                                    door.setUpperpulse(doorResponse.getUpperpulse());
+//                                    door.setLowerpulse(doorResponse.getLowerpulse());
+//                                    door.setDoorstatus(doorResponse.getOperating());
+//                                    mDoorService.update(door);
+//                                }
+//
+//                                break;
+//                            case AppInfo.B_TAG:
+//								MyLog.d(TAG,"AppInfo.B_TAG");
+//								ControlDoorResponse controlDoorResponse = StringUtils.controlDoorResponse(strings);
+//								doors = mDoorService.query("where doornum=?",controlDoorResponse.getDoornum());
+//								if(doors.size()==1){
+//									Door door = doors.get(0);
+//									door.setPhone(controlDoorResponse.getPhone());
+//									door.setEncoderpulses(controlDoorResponse.getEncoderpulses());
+//									door.setUpperpulse(controlDoorResponse.getUpperpulse());
+//									door.setLowerpulse(controlDoorResponse.getLowerpulse());
+//									door.setDoorstatus(controlDoorResponse.getOperatingstatus());
+//									mDoorService.update(door);
+//								}
+//                                break;
+//                            case AppInfo.C_TAG:
+//								MyLog.d(TAG,"AppInfo.C_TAG");
+//								UpDateDoorResponse upDateDoorResponse = StringUtils.upDateDoorResponse(strings);
+//								doors = mDoorService.query("where doornum=?",upDateDoorResponse.getDoornum());
+//								if(doors.size()==1){
+//									Door door = doors.get(0);
+//									door.setPhone(upDateDoorResponse.getPhone());
+//									door.setEncoderpulses(upDateDoorResponse.getEncoderpulses());
+//									door.setUpperpulse(upDateDoorResponse.getUpperpulse());
+//									door.setLowerpulse(upDateDoorResponse.getLowerpulse());
+//									door.setDoorstatus(upDateDoorResponse.getOperatingstatus());
+//									mDoorService.update(door);
+//								}
+//                                break;
+//                            case AppInfo.D_TAG:
+//
+//                                break;
+//                            case AppInfo.F_TAG:
+//
+//                                break;
+//                            default:
+//                                break;
+//                        }
 	                    Intent intentBroadcast = new Intent();
 	                    intentBroadcast.putExtra("message", messageContent.toString());
 	                    intentBroadcast.setAction(AppInfo.SMS_RECEIVED);
