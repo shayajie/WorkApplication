@@ -131,9 +131,9 @@
     <string name="door_opened_text">已 开 启</string>
     <string name="door_closed_text">已 关 闭</string>
     <string name="door_stoped_text">停   止</string>
-    <string name="door_closing_text">关 闭 中</string>
-    <string name="door_openning_text">开 启 中</string>
-    <string name="door_falling_text">已 下 降</string>
+    <string name="door_closing_text">下 降 中</string>
+    <string name="door_openning_text">上 升 中</string>
+    <string name="door_falling_text">门 上升或下降 完成</string>
 
     <string name="update_ensure">确认修改</string>
     <string name="toast_nameisnull">门名称不能为空！</string>
