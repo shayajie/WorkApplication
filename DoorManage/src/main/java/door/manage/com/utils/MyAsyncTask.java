@@ -14,6 +14,7 @@ import door.manage.com.service.DoorService;
 import test.greendao.bean.ControlDoorResponse;
 import test.greendao.bean.Door;
 import test.greendao.bean.GetDoorResponse;
+import test.greendao.bean.LockDoorResponse;
 import test.greendao.bean.UpDateDoorResponse;
 
 /**
@@ -61,49 +62,70 @@ public class MyAsyncTask extends AsyncTask<String,Void,Door>{
         switch (strings[0]) {
             case AppInfo.A_TAG:
                 MyLog.d(TAG, "AppInfo.A_TAG");
-                GetDoorResponse doorResponse = new GetDoorResponse(strings[0],strings[1],strings[2],strings[3],strings[4],strings[5],strings[6]);
-                doors = mDoorService.query("where PHONE=?", doorResponse.getPhone());
-                if (doors.size() == 1) {
-                    Door door = doors.get(0);
-                    door.setPhone(doorResponse.getPhone());
-                    door.setEncoderpulses(doorResponse.getEncoderpulses());
-                    door.setUpperpulse(doorResponse.getUpperpulse());
-                    door.setLowerpulse(doorResponse.getLowerpulse());
-                    door.setDoorstatus(doorResponse.getOperating());
-                    mDoorService.update(door);
+                if(strings.length == 8){
+                    GetDoorResponse doorResponse = new GetDoorResponse(strings);
+                    doors = mDoorService.query("where PHONE=?", doorResponse.getPhone());
+                    if (doors.size() == 1) {
+                        Door door = doors.get(0);
+                        door.setPhone(doorResponse.getPhone());
+                        door.setEncoderpulses(doorResponse.getEncoderpulses());
+                        door.setUpperpulse(doorResponse.getUpperpulse());
+                        door.setLowerpulse(doorResponse.getLowerpulse());
+                        door.setDoorstatus(doorResponse.getOperating());
+                        mDoorService.update(door);
+                    }
+                }else {
+
                 }
+
+
 
                 break;
             case AppInfo.B_TAG:
                 MyLog.d(TAG, "AppInfo.B_TAG");
-                ControlDoorResponse controlDoorResponse = StringUtils.controlDoorResponse(strings);
-                doors = mDoorService.query("where PHONE=?", controlDoorResponse.getPhone());
-                if (doors.size() == 1) {
-                    Door door = doors.get(0);
-                    door.setPhone(controlDoorResponse.getPhone());
-                    door.setEncoderpulses(controlDoorResponse.getEncoderpulses());
-                    door.setUpperpulse(controlDoorResponse.getUpperpulse());
-                    door.setLowerpulse(controlDoorResponse.getLowerpulse());
-                    door.setDoorstatus(controlDoorResponse.getOperatingstatus());
-                    mDoorService.update(door);
+                if(strings.length == 8){
+                    ControlDoorResponse controlDoorResponse = new ControlDoorResponse(strings);
+                    doors = mDoorService.query("where PHONE=?", controlDoorResponse.getPhone());
+                    if (doors.size() == 1) {
+                        Door door = doors.get(0);
+                        door.setPhone(controlDoorResponse.getPhone());
+                        door.setEncoderpulses(controlDoorResponse.getEncoderpulses());
+                        door.setUpperpulse(controlDoorResponse.getUpperpulse());
+                        door.setLowerpulse(controlDoorResponse.getLowerpulse());
+                        door.setDoorstatus(controlDoorResponse.getOperating());
+                        mDoorService.update(door);
+                    }
                 }
+
                 break;
             case AppInfo.C_TAG:
                 MyLog.d(TAG, "AppInfo.C_TAG");
-                UpDateDoorResponse upDateDoorResponse = StringUtils.upDateDoorResponse(strings);
-                doors = mDoorService.query("where PHONE=?", upDateDoorResponse.getPhone());
-                if (doors.size() == 1) {
-                    Door door = doors.get(0);
-                    door.setPhone(upDateDoorResponse.getPhone());
-                    door.setEncoderpulses(upDateDoorResponse.getEncoderpulses());
-                    door.setUpperpulse(upDateDoorResponse.getUpperpulse());
-                    door.setLowerpulse(upDateDoorResponse.getLowerpulse());
-                    door.setDoorstatus(upDateDoorResponse.getOperatingstatus());
-                    mDoorService.update(door);
+                if(strings.length == 8){
+                    UpDateDoorResponse upDateDoorResponse = new UpDateDoorResponse(strings);
+                    doors = mDoorService.query("where PHONE=?", upDateDoorResponse.getPhone());
+                    if (doors.size() == 1) {
+                        Door door = doors.get(0);
+                        door.setPhone(upDateDoorResponse.getPhone());
+                        door.setEncoderpulses(upDateDoorResponse.getEncoderpulses());
+                        door.setUpperpulse(upDateDoorResponse.getUpperpulse());
+                        door.setLowerpulse(upDateDoorResponse.getLowerpulse());
+                        door.setDoorstatus(upDateDoorResponse.getOperating());
+                        mDoorService.update(door);
+                    }
                 }
+
                 break;
             case AppInfo.D_TAG:
-
+                if(strings.length == 5){
+                    LockDoorResponse lockDoorResponse = new LockDoorResponse(strings);
+                    doors = mDoorService.query("where PHONE=?", lockDoorResponse.getPhone());
+                    if (doors.size() == 1) {
+                        Door door = doors.get(0);
+                        door.setPhone(lockDoorResponse.getPhone());
+                        door.setDoorlock(lockDoorResponse.getRemotelock());
+                        mDoorService.update(door);
+                    }
+                }
                 break;
             case AppInfo.F_TAG:
 

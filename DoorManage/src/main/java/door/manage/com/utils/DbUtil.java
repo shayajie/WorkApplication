@@ -54,12 +54,12 @@ public class DbUtil {
         return userService;
     }
 
-    public static void firstaddUser(String number){
+    public static void firstaddUser(){
 
         checkManagerExist();
 
 
-        adduser(number);
+        adduser();
 //        List<Manager> managers =getManagerService().query("where name=?","supermanage").size()
 //        if(managers.size()==1){
 //            managers.get(0).set
@@ -81,7 +81,7 @@ public class DbUtil {
 
 
 
-    public static void adduser(String number){
+    public static void adduser(){
         List<User> users = getUserService().query("where name=?","本机");
         if(users.size()<1){
             User mUser = new User();
@@ -91,9 +91,9 @@ public class DbUtil {
 //                MyLog.d(TAG,""+getManagerId());
 //            }
             mUser.setManagerId(managerId);
-            if(!number.isEmpty()){
-                mUser.setPhone(number);
-            }
+//            if(!number.isEmpty()){
+//                mUser.setPhone(number);
+//            }
 
             getUserService().save(mUser);
         }
