@@ -20,7 +20,6 @@
                 style="?android:attr/textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="sajhdkjashjdkhasjk"
                 android:padding="5dip" />
     </LinearLayout>
 
@@ -66,6 +65,7 @@
                 android:layout_width="0dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:textColor="@color/dialog_button_color"
                 style="?android:attr/buttonBarButtonStyle"
                 android:maxLines="2"
                 android:layout_height="wrap_content" />
@@ -73,7 +73,6 @@
                 android:layout_width="0dip"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="1231213"
                 android:textColor="@color/dialog_button_color"
                 style="?android:attr/buttonBarButtonStyle"
                 android:maxLines="2"

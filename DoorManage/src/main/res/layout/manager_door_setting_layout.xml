@@ -47,15 +47,20 @@
                                 android:textColor="@color/white_first_text_color"
                                 android:textSize="@dimen/first_text_size" />
 
-
-                            <Switch
-                                android:id="@+id/one_key_lock_switch"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
+                            <RelativeLayout
+                                android:id="@+id/one_key_lock_rel"
                                 android:layout_weight="7"
-                                android:textOff="开启"
-                                android:textOn="已锁" />
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                                <Switch
+                                    android:id="@+id/one_key_lock_switch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:textOff="开启"
+                                    android:textOn="已锁" />
+                            </RelativeLayout>
+
                         </LinearLayout>
 
                         <View
