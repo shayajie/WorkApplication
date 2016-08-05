@@ -28,7 +28,6 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
     private Door door;
     private boolean isShowDialog = false;
 
-
     private LinearLayout verification_layout, door_setting_layout;
     private TextView password_prompt_text;
     private EditText update_door_name_edittext,
@@ -160,14 +159,20 @@ public class DoorSettingActivity extends BaseActivity implements View.OnClickLis
                                     door.setUpperpulse(update_door_pulse_upper_edittext.getText().toString());
                                     door.setLowerpulse(update_door_pulse_lower_edittext.getText().toString());
                                     door.setPassword(update_door_password_edittext.getText().toString());
-                                    MyLog.d(Tag,door.toString());
+
+                                    MyLog.d(Tag,"this.door========"+this.door.toString());
+
+                                    MyLog.d(Tag,"door========"+door.toString());
                                     mDoorService.update(door);
 
-                                   if (checkDoorInfoChange(door)){
-                                       UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
-                                       MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
-                                       sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
-                                   }
+//                                   if (checkDoorInfoChange(door)){
+                                       UpDateDoorRequest request = new UpDateDoorRequest(door.getPhone(),door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse());
+                                       MyLog.d(Tag,"修改了+======="+request.getMessage());
+                                       sendMessage(door.getPhone(), request.getMessage());
+
+//                                   }else {
+//                                       MyLog.d(Tag,"没有修改+=======");
+//                                   }
                                     isupdate = true;
                                     Toast.makeText(mContext,resources.getString(R.string.updata_done),Toast.LENGTH_SHORT).show();
 

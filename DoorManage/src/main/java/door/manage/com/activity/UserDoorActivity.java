@@ -65,13 +65,15 @@ public class UserDoorActivity extends BaseActivity{
 
                     Door door = doors.get(position);
                     GetDoorRequest getDoorRequest = new GetDoorRequest(door.getPhone());
-                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
-                    sendMessage(door.getPhone(), StringUtils.getDoorMessage(getDoorRequest));
+                    MyLog.d(TAG,getDoorRequest.getMessage());
+//                    sendMessage(door.getPhone(), getDoorRequest.getMessage());
 //                    String message = AppInfo.A_TAG+AppInfo.LAST_TAG+door.getDoornum()+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"0"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+"111"+AppInfo.LAST_TAG+door.getPhone();
 //                    MyLog.d(StringUtils.getDoorMessage(getDoorRequest));
 //                    sendMessage(door.getPhone(), message);
                     Intent intent = new Intent(mContext, ManagerControlDoorActivity.class);
                     intent.putExtra("doorId", doors.get(position).getDoorId());
+                    intent.putExtra("message",getDoorRequest.getMessage());
+                    intent.putExtra("isShowDialog",true);
                     startActivity(intent);
                 }
             }

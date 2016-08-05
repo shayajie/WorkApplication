@@ -2,12 +2,14 @@ package door.manage.com.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import door.manage.com.app.AppInfo;
 import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
 import door.manage.com.utils.StringUtils;
+import door.manage.com.view.Dialog;
 import test.greendao.bean.Door;
 import test.greendao.bean.LockDoorRequest;
 import test.greendao.bean.Manager;
@@ -44,6 +47,7 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
             password_edittext;
     private Button update_door_button,password_button;
     private Switch onekey_close_door_button;
+    private RelativeLayout one_key_lock_rel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,23 +74,38 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
         onekey_close_door_button = (Switch) findViewById(R.id.one_key_lock_switch);
         update_door_button.setOnClickListener(this);
         password_button.setOnClickListener(this);
-        onekey_close_door_button.setOnClickListener(new View.OnClickListener() {
+        onekey_close_door_button.setClickable(false);
+        onekey_close_door_button.setFocusable(false);
+        one_key_lock_rel = (RelativeLayout) findViewById(R.id.one_key_lock_rel);
+        one_key_lock_rel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LockDoorRequest request = new LockDoorRequest(door.getDoornum(),AppInfo.WRITE_TAG,door.getPhone());
-                //测试发现 界面显示true  点击后变false 这里ischecked应该是点击后状态改变获取的
+                LockDoorRequest request = new LockDoorRequest(door.getPhone(),"0");
                 if(onekey_close_door_button.isChecked()){
-                    MyLog.d(Tag,"true");
-                    request.setRemotelock("1");
-
-                }else{
-                    MyLog.d(Tag,"flase");
                     request.setRemotelock("0");
+                }else {
+                    request.setRemotelock("1");
                 }
-
-                dialog(request);
+                promoteDialog(door.getPhone(),request.getMessage(),false);
             }
         });
+//        onekey_close_door_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LockDoorRequest request = new LockDoorRequest(door.getPhone(),"0");
+//                //测试发现 界面显示true  点击后变false 这里ischecked应该是点击后状态改变获取的
+//                if(onekey_close_door_button.isChecked()){
+//                    MyLog.d(Tag,"true");
+//                    request.setRemotelock("1");
+//
+//                }else{
+//                    MyLog.d(Tag,"flase");
+//                    request.setRemotelock("0");
+//                }
+//
+//                dialog(request);
+//            }
+//        });
 
 //        onekey_close_door_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -206,10 +225,10 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
 
 
 
-                                UpDateDoorRequest request = new UpDateDoorRequest(door.getDoornum(), AppInfo.WRITE_TAG,door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse(),door.getPassword(),door.getPhone());
+                                UpDateDoorRequest request = new UpDateDoorRequest(door.getPhone(),door.getEncoderpulses(),door.getUpperpulse(),door.getLowerpulse());
 //
-                                MyLog.d(Tag,StringUtils.upDateDoorRequest(request));
-                                sendMessage(door.getPhone(), StringUtils.upDateDoorRequest(request));
+                                MyLog.d(Tag,request.getMessage());
+                                sendMessage(door.getPhone(), request.getMessage());
                                 isupdate = true;
                             }else{
                                 Toast.makeText(mContext,resources.getString(R.string.toast_passwordisnull),Toast.LENGTH_SHORT).show();
@@ -246,8 +265,8 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                MyLog.d(Tag,StringUtils.lockDoorRequest(request));
-                sendMessage(door.getPhone(),StringUtils.lockDoorRequest(request));
+//                MyLog.d(Tag,StringUtils.lockDoorRequest(request));
+//                sendMessage(door.getPhone(),StringUtils.lockDoorRequest(request));
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -259,5 +278,73 @@ public class ManagerDoorSettingActivity extends BaseActivity implements View.OnC
         });
 
         builder.create().show();
+    }
+
+    private AlertDialog alertDialog;
+
+    private void promoteDialog(final String sender, final String message, boolean fasong) {
+        final Dialog mdialog = new Dialog(ManagerDoorSettingActivity.this);
+        mdialog.setTitle(R.string.dialog_title_promote);
+        mdialog.setView(R.layout.dialog_layout);
+
+        final TextView text = (TextView) mdialog.getView().findViewById(R.id.message1);
+        text.setText("是否要远程锁门?");
+        final Button positive = (Button) mdialog.getView().findViewById(R.id.button21);
+        final Button negative = (Button) mdialog.getView().findViewById(R.id.button31);
+
+        final CountDownTimer timer = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                positive.setText(resources.getString(R.string.dialog_positive_send) + "(" + millisUntilFinished / 1000 + ")");
+            }
+
+            @Override
+            public void onFinish() {
+                positive.setClickable(true);
+                negative.setClickable(true);
+                text.setText(R.string.dialog_text_send_promote);
+                positive.setText(R.string.dialog_positive_send_again);
+                positive.setTextColor(resources.getColor(R.color.dialog_button_color));
+
+            }
+        };
+
+        positive.setText(R.string.dialog_positive_send);
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                positive.setClickable(false);
+                positive.setTextColor(resources.getColor(R.color.dialog_button_false_color));
+                text.setText("已发送!请耐心等待。");
+                sendMessage(sender, message);
+                timer.start();
+            }
+        });
+        negative.setText(R.string.dialog_cancel);
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                mdialog.alertDialog.dismiss();
+            }
+        });
+
+        mdialog.create();
+        mdialog.show();
+        mdialog.setCanceledOnTouchOutside(false);
+        if (fasong) {
+            positive.performClick();
+        }
+        negative.setClickable(false);
+        alertDialog = mdialog.alertDialog;
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
     }
 }

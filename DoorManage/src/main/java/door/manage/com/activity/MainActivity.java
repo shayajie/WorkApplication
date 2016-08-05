@@ -38,11 +38,14 @@ public class MainActivity extends BaseActivity {
     private final static String TAG = "MainActivity";
     //标题栏
 
-    private List<User> users;
+//    private List<User> users;
+    private User user;
     private List<Door> doors;
 
     private GridView mGridView;
     private GridView_Adapter mGridView_adapter;
+
+    private TextView user_setting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,25 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         mContext = this;
         MyLog.d(TAG,"onCreate");
+        boolean isFirstRun = shared.getBoolean("isFirstRun", true);
+        if (isFirstRun) {
+//            editor.putBoolean("isFirstRun", false);
+//            editor.commit();
+            jumptoUsersetting();
+
+        }else{
+            User user = mUserService.query(1L);
+            if(user.getPhone()!=null){
+
+                if(user.getPhone().isEmpty()){
+                    jumptoUsersetting();
+                }
+
+            }else {
+                jumptoUsersetting();
+            }
+        }
+
         initdata();
         initview();
     }
@@ -57,7 +79,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void updateUI() {
         MyLog.d(TAG,"updateUI");
-        doors = mDoorService.query("where USER_ID=?", "" + users.get(0).getUserId());
+        doors = mDoorService.query("where USER_ID=?", "" + user.getUserId());
         mGridView_adapter = new GridView_Adapter(doors, mContext);
         mGridView.setAdapter(mGridView_adapter);
     }
@@ -65,14 +87,15 @@ public class MainActivity extends BaseActivity {
 
     private void initdata() {
         MyLog.d(TAG, "==============initdata_start");
-        users = mUserService.query("where name=?", "本机");
-        if (users.size() == 1) {
-            doors = mDoorService.query("where USER_ID=?", "" + users.get(0).getUserId());
+        user = mUserService.query(1L);
+        if (user != null) {
+            doors = mDoorService.query("where USER_ID=?", "" + user.getUserId());
         }else {
             Toast.makeText(mContext,"数据出错",Toast.LENGTH_SHORT).show();
         }
         MyLog.d(TAG, "==============initdata_end");
-        MyLog.d(TAG, "" + users.get(0).getUserId());
+        MyLog.d(TAG, "" + user.getUserId());
+        MyLog.d(TAG, "" + user.getName());
     }
 
     private void initview() {
@@ -87,6 +110,13 @@ public class MainActivity extends BaseActivity {
                 startActivityForResult(intent,0);
             }
         });
+        user_setting = (TextView) findViewById(R.id.user_setting);
+        user_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumptoUsersetting();
+            }
+        });
 
         mGridView = (GridView) findViewById(R.id.door_gridview);
 
@@ -99,7 +129,7 @@ public class MainActivity extends BaseActivity {
                 if (doors.size() == position) {
                     MyLog.d(TAG,"adddoor");
                     Intent intent = new Intent(mContext, AddDoorActivity.class);
-                    intent.putExtra("userid", users.get(0).getUserId());
+                    intent.putExtra("userid", user.getUserId());
                     startActivityForResult(intent, 0);
                 } else {
 
@@ -213,10 +243,15 @@ public class MainActivity extends BaseActivity {
                 handler.sendEmptyMessageDelayed(0,3000);
                 return true;
             }else {
-                finish();
-                return false;
+                moveTaskToBack(false);
+                return true;
             }
         }
         return true;
+    }
+
+    private void jumptoUsersetting(){
+        Intent intent = new Intent(this,FileControlActivity.class);
+        startActivity(intent);
     }
 }

@@ -2,10 +2,14 @@ package door.manage.com.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import door.manage.com.R;
 import door.manage.com.app.AppInfo;
 import door.manage.com.utils.MyLog;
 import door.manage.com.utils.StringUtils;
+import door.manage.com.view.Dialog;
 import test.greendao.bean.ControlDoorRequest;
 import test.greendao.bean.Door;
 
@@ -23,7 +28,7 @@ import test.greendao.bean.Door;
  * Created by shayajie on 2016/6/29.
  */
 public class ManagerControlDoorActivity extends BaseActivity implements View.OnClickListener{
-    private static final String Tag = "ManagerControlDoorActivity";
+    private static final String TAG = "ManagerControlDoorActivity";
     private List<Door> doors;
     private Door door;
     private Long doorID;
@@ -34,6 +39,8 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
     private ImageView open_door_indicator_lamp_imageview,close_door_indicator_lamp_imageview,up_door_indicator_lamp_imageview,down_door_indicator_lamp_imageview;
     private boolean issend = false;
     private ControlDoorRequest request;
+    private boolean isShowDialog;
+    private String message;
 //	private ToggleButton open_toggleButton,close_toggleButton,stop_toggleButton;
 
     @Override
@@ -42,15 +49,22 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
         setContentView(R.layout.door_control_layout);
         mContext = this;
         doorID = getIntent().getLongExtra("doorId",0L);
+        message = getIntent().getStringExtra("message");
+        isShowDialog = getIntent().getBooleanExtra("isShowDialog", false);
         initdata();
         initview();
     }
 
     @Override
     protected void updateUI() {
-        MyLog.d(Tag,"updateUI");
+        MyLog.d(TAG,"updateUI");
+
+        if (alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
         door = mDoorService.query(doorID);
         UIData(door);
+
 
     }
 
@@ -197,6 +211,16 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (isShowDialog) {
+            MyLog.d(TAG, "onResume");
+            promoteDialog(door.getPhone(), message, true);
+            isShowDialog = false;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -211,15 +235,17 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.open_door_relayout:
                 request  = new ControlDoorRequest(AppInfo.OPERATING_OPEN,door.getPhone());
-                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
-            sendMessage(door.getPhone(), StringUtils.controlDoorRequest(request));
+                MyLog.d(TAG,request.getMessage());
+//            sendMessage(door.getPhone(), request.getMessage());
+                promoteDialog(door.getPhone(),request.getMessage(),false);
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
                 break;
             case R.id.close_door_relayout:
                 request = new ControlDoorRequest(AppInfo.OPERATING_CLOSE,door.getPhone());
-                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
-            sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(TAG,request.getMessage());
+//                sendMessage(door.getPhone(), request.getMessage());
+                promoteDialog(door.getPhone(),request.getMessage(),false);
 //			close_door_prompt_message.setText("正在开启");
 //			Bitmap color = BitmapFactory.decodeResource(getResources(), R.drawable.green_bg);
 //			BitmapDrawable bd= new BitmapDrawable(getResources(), color);
@@ -228,21 +254,25 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.stop_relayout:
                 request = new ControlDoorRequest(AppInfo.OPERATING_STOP,door.getPhone());
-                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(TAG,request.getMessage());
+//                sendMessage(door.getPhone(), request.getMessage());
+                promoteDialog(door.getPhone(),request.getMessage(),false);
 //			stop_prompt_message.setText("发送指令中");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
 //			close_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
                 break;
             case R.id.up_door_relayout:
                 request = new ControlDoorRequest(AppInfo.OPERATING_UP,door.getPhone());
-                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(TAG,request.getMessage());
+//                sendMessage(door.getPhone(), request.getMessage());
+                promoteDialog(door.getPhone(),request.getMessage(),false);
+
                 break;
             case R.id.down_door_relayout:
                 request = new ControlDoorRequest(AppInfo.OPERATING_DOWN,door.getPhone());
-                MyLog.d(Tag,StringUtils.controlDoorRequest(request));
-			sendMessage(door.getPhone(),StringUtils.controlDoorRequest(request));
+                MyLog.d(TAG,request.getMessage());
+//                sendMessage(door.getPhone(), request.getMessage());
+                promoteDialog(door.getPhone(),request.getMessage(),false);
                 break;
             default:
                 break;
@@ -268,5 +298,87 @@ public class ManagerControlDoorActivity extends BaseActivity implements View.OnC
             default:
                 break;
         }
+    }
+
+    private AlertDialog alertDialog;
+
+    private void promoteDialog(final String sender, final String message, boolean fasong) {
+        final Dialog mdialog = new Dialog(ManagerControlDoorActivity.this);
+        mdialog.setTitle(R.string.dialog_title_promote);
+        mdialog.setView(R.layout.dialog_layout);
+
+        final TextView text = (TextView) mdialog.getView().findViewById(R.id.message1);
+        text.setText("是否发送信息?");
+        final Button positive = (Button) mdialog.getView().findViewById(R.id.button21);
+        final Button negative = (Button) mdialog.getView().findViewById(R.id.button31);
+
+        final CountDownTimer timer = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                positive.setText(resources.getString(R.string.dialog_positive_send) + "(" + millisUntilFinished / 1000 + ")");
+            }
+
+            @Override
+            public void onFinish() {
+                positive.setClickable(true);
+                negative.setClickable(true);
+                text.setText("是否重新发送?");
+                positive.setText(R.string.dialog_positive_send_again);
+                positive.setTextColor(resources.getColor(R.color.dialog_button_color));
+
+            }
+        };
+
+        positive.setText(R.string.dialog_positive_send);
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                positive.setClickable(false);
+                positive.setTextColor(resources.getColor(R.color.dialog_button_false_color));
+                text.setText("已发送!请耐心等待。15秒后无消息返回可重新发送或联系管理员");
+                sendMessage(sender, message);
+                timer.start();
+            }
+        });
+        negative.setText(R.string.dialog_cancel);
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                mdialog.alertDialog.dismiss();
+            }
+        });
+
+        mdialog.create();
+        mdialog.show();
+        mdialog.setCanceledOnTouchOutside(false);
+        if (fasong) {
+            positive.performClick();
+        }
+        negative.setClickable(false);
+        alertDialog = mdialog.alertDialog;
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            if(alertDialog.isShowing()){
+                alertDialog.dismiss();
+                return true;
+            }else {
+                finish();
+                return false;
+            }
+        }
+        return true;
     }
 }

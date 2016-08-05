@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -52,7 +53,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
             super.handleMessage(msg);
             if (msg.what == 0) {
                 MyLog.d(TAG, "handleMessage");
-                getmessage = "";
+//                getmessage = "";
                 updateUI();
             }
         }
@@ -74,18 +75,21 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
     @Override
     protected void updateUI() {
         MyLog.d(TAG, "updateUI");
-        if (getmessage != null && !getmessage.isEmpty()) {
-            myAsyncTask = new MyAsyncTask(handler);
-            myAsyncTask.execute(getmessage);
-        } else {
-            if (alertDialog.isShowing()) {
-                alertDialog.dismiss();
-            }
-            door = mDoorService.query(doorID);
-            UIData(door);
+//        if (getmessage != null && !getmessage.isEmpty()) {
+//            myAsyncTask = new MyAsyncTask(handler);
+//            myAsyncTask.execute(getmessage);
+//        } else {
+//            if (alertDialog.isShowing()) {
+//                alertDialog.dismiss();
+//            }
+//            door = mDoorService.query(doorID);
+//            UIData(door);
+//        }
+        if (alertDialog.isShowing()) {
+            alertDialog.dismiss();
         }
-//
-
+        door = mDoorService.query(doorID);
+        UIData(door);
 
     }
 
@@ -238,7 +242,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
         super.onResume();
         if (isShowDialog) {
             MyLog.d(TAG, "onResume");
-            promoteDialog(door.getPhone(), message);
+            promoteDialog(door.getPhone(), message, true);
             isShowDialog = false;
         }
     }
@@ -262,7 +266,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
                 MyLog.d(TAG, "open_door");
                 request = new ControlDoorRequest(AppInfo.OPERATING_OPEN, door.getPhone());
                 MyLog.d(TAG, request.getMessage());
-                promoteDialog(door.getPhone(),request.getMessage());
+                promoteDialog(door.getPhone(), request.getMessage(), false);
 //                sendMessage(door.getPhone(), request.getMessage());
 //			open_door_prompt_message.setText("正在开启");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.green));
@@ -271,7 +275,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
                 MyLog.d(TAG, "close_door");
                 request = new ControlDoorRequest(AppInfo.OPERATING_CLOSE, door.getPhone());
                 MyLog.d(TAG, request.getMessage());
-                promoteDialog(door.getPhone(),request.getMessage());
+                promoteDialog(door.getPhone(), request.getMessage(), false);
 //                sendMessage(door.getPhone(), request.getMessage());
 //			close_door_prompt_message.setText("正在开启");
 //			Bitmap color = BitmapFactory.decodeResource(getResources(), R.drawable.green_bg);
@@ -283,7 +287,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
                 MyLog.d(TAG, "stop");
                 request = new ControlDoorRequest(AppInfo.OPERATING_STOP, door.getPhone());
                 MyLog.d(TAG, request.getMessage());
-                promoteDialog(door.getPhone(),request.getMessage());
+                promoteDialog(door.getPhone(), request.getMessage(), false);
 //                sendMessage(door.getPhone(), request.getMessage());
 //			stop_prompt_message.setText("发送指令中");
 //			open_door_indicator_lamp_imageview.setBackgroundColor(getResources().getColor(R.color.white_second_text_color));
@@ -293,14 +297,14 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
                 MyLog.d(TAG, "up_door");
                 request = new ControlDoorRequest(AppInfo.OPERATING_UP, door.getPhone());
                 MyLog.d(TAG, request.getMessage());
-                promoteDialog(door.getPhone(),request.getMessage());
+                promoteDialog(door.getPhone(), request.getMessage(), false);
 //                sendMessage(door.getPhone(), request.getMessage());
                 break;
             case R.id.down_door_relayout:
                 MyLog.d(TAG, "down_door");
                 request = new ControlDoorRequest(AppInfo.OPERATING_DOWN, door.getPhone());
                 MyLog.d(TAG, request.getMessage());
-                promoteDialog(door.getPhone(),request.getMessage());
+                promoteDialog(door.getPhone(), request.getMessage(), false);
 //                sendMessage(door.getPhone(), request.getMessage());
                 break;
             default:
@@ -337,13 +341,13 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
 
     private AlertDialog alertDialog;
 
-    private void promoteDialog(final String sender, final String message) {
+    private void promoteDialog(final String sender, final String message, boolean fasong) {
         final Dialog mdialog = new Dialog(DoorControlActivity.this);
         mdialog.setTitle(R.string.dialog_title_promote);
         mdialog.setView(R.layout.dialog_layout);
 
         final TextView text = (TextView) mdialog.getView().findViewById(R.id.message1);
-        text.setText(R.string.dialog_text_send_promote);
+        text.setText("是否发送短信?");
         final Button positive = (Button) mdialog.getView().findViewById(R.id.button21);
         final Button negative = (Button) mdialog.getView().findViewById(R.id.button31);
 
@@ -357,7 +361,7 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
             public void onFinish() {
                 positive.setClickable(true);
                 negative.setClickable(true);
-                text.setText(R.string.dialog_text_send_promote);
+                text.setText("是否重新发送?");
                 positive.setText(R.string.dialog_positive_send_again);
                 positive.setTextColor(resources.getColor(R.color.dialog_button_color));
 
@@ -387,7 +391,9 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
         mdialog.create();
         mdialog.show();
         mdialog.setCanceledOnTouchOutside(false);
-        positive.performClick();
+        if (fasong) {
+            positive.performClick();
+        }
         negative.setClickable(false);
         alertDialog = mdialog.alertDialog;
 
@@ -401,4 +407,17 @@ public class DoorControlActivity extends BaseActivity implements OnClickListener
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            if(alertDialog.isShowing()){
+                alertDialog.dismiss();
+                return true;
+            }else {
+                finish();
+                return false;
+            }
+        }
+        return true;
+    }
 }

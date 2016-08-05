@@ -12,6 +12,7 @@ import door.manage.com.R;
 import door.manage.com.service.SmsService;
 import door.manage.com.utils.DbUtil;
 import door.manage.com.utils.MyLog;
+import test.greendao.bean.User;
 
 /**
  * Created by shayajie on 2016/6/16.
@@ -29,10 +30,15 @@ public class StartActivity extends BaseActivity{
         editor = shared.edit();
         Intent intent  = new Intent(this,SmsService.class);
         startService(intent);
-        TelephonyManager telephonyManager = (TelephonyManager) this
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        String NativePhoneNumber= telephonyManager.getLine1Number();
-        MyLog.d(TAG,NativePhoneNumber);
+//        TelephonyManager telephonyManager = (TelephonyManager) this
+//                .getSystemService(Context.TELEPHONY_SERVICE);
+//        String tr =  telephonyManager.getDeviceId();
+//        MyLog.d(TAG,"=====getDeviceId====="+tr);
+//        String NativePhoneNumber= telephonyManager.getLine1Number();
+//        MyLog.d(TAG,NativePhoneNumber);
+        User user = mUserService.query(1L);
+        MyLog.d(TAG,user.toString());
+
         firstRun();
         AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
         aa.setDuration(2000);
@@ -46,8 +52,8 @@ public class StartActivity extends BaseActivity{
             @Override
             public void onAnimationEnd(Animation animation) {
                 MyLog.d(TAG,"onAnimationEnd");
-//                redirectto();
-                reddebug();
+                redirectto();
+//                reddebug();
             }
 
             @Override
@@ -70,15 +76,21 @@ public class StartActivity extends BaseActivity{
 
 
 
-            DbUtil.firstaddUser("");
-            editor.putBoolean("isFirstRun", false);
-            editor.commit();
+            DbUtil.firstaddUser();
+
             MyLog.d(TAG,"==============firstrun_end");
 
         }
     }
     private void redirectto() {
         MyLog.d(TAG,"redirectto");
+
+//        boolean isFirstRun = shared.getBoolean("isFirstRun", true);
+//        if (isFirstRun) {
+//            editor.putBoolean("isFirstRun", false);
+//            editor.commit();
+//        }
+
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();

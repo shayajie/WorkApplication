@@ -60,7 +60,7 @@ public abstract class BaseActivity extends Activity {
     private MSmsReceiver mSmsReceiver;
 //    private SmsService.SmsReceiver smsReceiver;
 
-    protected String getmessage;
+//    protected String getmessage;
 
 
     @Override
@@ -77,6 +77,17 @@ public abstract class BaseActivity extends Activity {
         mDoorService = DbUtil.getDoorService();
         mManagerService = DbUtil.getManagerService();
 
+
+        mSmsStatusReceiver = new SmsStatusReceiver();
+        registerReceiver(mSmsStatusReceiver, new IntentFilter(AppInfo.SMS_SEND_ACTIOIN));
+
+        mSmsDeliveryStatusReceiver = new SmsDeliveryStatusReceiver();
+        registerReceiver(mSmsDeliveryStatusReceiver, new IntentFilter(AppInfo.SMS_DELIVERED_ACTION));
+
+        mSmsReceiver = new MSmsReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("sms_received");
+        registerReceiver(mSmsReceiver, intentFilter);
 
 //        title_back = (RelativeLayout) findViewById(R.id.title_back);
 //        title_setting = (RelativeLayout) findViewById(R.id.title_setting);
@@ -191,8 +202,8 @@ public abstract class BaseActivity extends Activity {
                     MyLog.d(TAG, "action: " + action);
                     if (SMS_RECEIVED_ACTION.equals(action)) {
                         Bundle bundle = intent.getExtras();
-                        getmessage = bundle.getString("message");
-                        MyLog.d(TAG, getmessage);
+//                        getmessage = bundle.getString("message");
+//                        MyLog.d(TAG, getmessage);
                         updateUI();
 
 
@@ -218,16 +229,7 @@ public abstract class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
         MyLog.d(TAG,"onStart");
-        mSmsStatusReceiver = new SmsStatusReceiver();
-        registerReceiver(mSmsStatusReceiver, new IntentFilter(AppInfo.SMS_SEND_ACTIOIN));
 
-        mSmsDeliveryStatusReceiver = new SmsDeliveryStatusReceiver();
-        registerReceiver(mSmsDeliveryStatusReceiver, new IntentFilter(AppInfo.SMS_DELIVERED_ACTION));
-
-        mSmsReceiver = new MSmsReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("sms_received");
-        registerReceiver(mSmsReceiver, intentFilter);
     }
 
     @Override
@@ -239,15 +241,15 @@ public abstract class BaseActivity extends Activity {
     protected void onStop() {
         super.onStop();
         MyLog.d(TAG,"onStop");
-        unregisterReceiver(mSmsReceiver);
-        unregisterReceiver(mSmsStatusReceiver);
-        unregisterReceiver(mSmsDeliveryStatusReceiver);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        unregisterReceiver(mSmsReceiver);
+        unregisterReceiver(mSmsStatusReceiver);
+        unregisterReceiver(mSmsDeliveryStatusReceiver);
     }
 
 }
